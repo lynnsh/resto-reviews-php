@@ -52,9 +52,8 @@ class RegisterController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
-            'postalcode' => 'required|regex:'
-                . '/^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$/',
-        ]);
+            'postalcode' => Utilities::postalRegex,
+        ]);    
     }
 
     /**
@@ -66,15 +65,13 @@ class RegisterController extends Controller
     protected function create(array $data)
     {   
         $util = new Utilities();
-        $location = $util -> GetGeocodingSearchResults($data['postalcode']);
-        $lat = $location[0]['latitude'];
-        $long = $location[0]['longitude'];
+        $util -> GetGeocodingSearchResults($data['postalcode']);
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'latitude' => $lat,
-            'longitude' => $long
+            'latitude' => session('latitude'),
+            'longitude' => session('longitude')
         ]);
     }
 }

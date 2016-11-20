@@ -8,11 +8,17 @@ namespace App;
  * @author aline
  */
 class Utilities {
+    const defaultLatitude = '45.5016889';
+    const defaultLongitude = '-73.5672560';
+    const postalRegex = 'required|regex:'
+                . '/^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$/';
+    /*^((\d{5}-\d{4})|(\d{5})|([AaBbCcEeGgHhJjKkLlMmNnPpRrSsTtVvXxYy]\d[A-Za-z]\s?\d[A-Za-z]\d))$*/
     
     public function GetGeocodingSearchResults($address) {
         $address = urlencode($address); //Url encode since it was provided by user
         $url = "http://maps.google.com/maps/api/geocode/xml?address={$address}&sensor=false";
-
+        $pairs = [];
+        
         // Retrieve the XML file
         $results = file_get_contents($url);
         $xml = new \DOMDocument();//backslash to indicate global namespace
@@ -28,6 +34,25 @@ class Utilities {
             $i++;
         }
 
-        return $pairs;
+        $this -> getLocation($pairs);
+    }
+    
+    private function getLocation($locations) {
+        $same = true;
+        $length = count($locations);
+        for($i = 1; $i < $length && $same; $i++) {
+            if($locations[$i]['latitude'] !== $locations[$i-1]['latitude']
+              && $locations[$i]['longitude'] !== $locations[$i-1]['longitude'])
+                $same = false;
+        }
+        if($same && $length > 0) {
+            $latitude=$locations[0]['latitude'];
+            $longitude=$locations[0]['longitude'];
+            session(['latitude'=> $latitude, 'longitude' => $longitude]);
+        }
+        else {
+            session(['latitude' => Utilities::defaultLatitude,
+                     'longitude' => Utilities::defaultLongitude]);
+        }
     }
 }

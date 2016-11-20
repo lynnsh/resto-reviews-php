@@ -13,5 +13,7 @@
 
 Auth::routes();
 
-Route::get('/home', 'GeoController@index');
-Route::get('/', 'GeoController@index');
+Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index');
+Route::post('/geo', 'GeoController@locate');
+Route::get('/geo', 'GeoController@index');

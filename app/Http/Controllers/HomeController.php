@@ -11,9 +11,8 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
+    public function __construct() {
+        //$this->middleware('auth');
     }
 
     /**
@@ -21,8 +20,11 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('home');
+    public function index() {
+        $lat = session('latitude');
+        if(! isset($lat))
+            return redirect('/geo');
+        else
+            return view('home');
     }
 }
