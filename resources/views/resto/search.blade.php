@@ -1,18 +1,8 @@
-<!-- resources/views/resto/index.blade.php -->
+<!-- resources/views/resto/search.blade.php -->
 
 @extends('layouts.app')
 
 @section('content')
-
-    <div class='resto-search'>
-        <form action="{{ url('resto/search') }}" method="GET">
-            <label for="key">Search:</label>
-            <input id='key' type='text' name='key' class="form-control" value="{{ old('key') }}" required/>
-            <button type="submit" id="resto-search" class="btn btn-info">
-                <i class="glyphicon glyphicon-search"></i>
-            </button>
-        </form>
-    </div>
 
     @if (count($restos) > 0)
         <div class="panel panel-default">
@@ -72,11 +62,12 @@
             </div>
         </div>
     @endif
+    {{ $restos->links() }}
     
-    @if ( Auth::check()  )
-        <!-- add a resto -->
-        <a href='/resto/create' class="btn btn-warning fa fa-btn fa-plus">Add new restaurant..</a>
-    @endif
     
+    <div>
+        <a href='/resto' class="btn btn-default fa fa-btn fa-plus">Back</a>
+    </div>
 @endsection
+
 

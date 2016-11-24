@@ -65,13 +65,14 @@ class RegisterController extends Controller
     protected function create(array $data)
     {   
         $util = new Utilities();
-        $util -> GetGeocodingSearchResults($data['postalcode']);
+        $pair = $util -> GetGeocodingSearchResults($data['postalcode']);
+        session(['latitude'=> $pair('latitude'), 'longitude' => $pair('longitude')]);
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'latitude' => session('latitude'),
-            'longitude' => session('longitude')
+            'latitude' => $pair('latitude'),
+            'longitude' => $pair('longitude')
         ]);
     }
 }

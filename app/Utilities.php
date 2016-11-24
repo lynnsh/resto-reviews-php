@@ -34,12 +34,13 @@ class Utilities {
             $i++;
         }
 
-        $this -> getLocation($pairs);
+        return $this -> getLocation($pairs);
     }
     
     private function getLocation($locations) {
         $same = true;
         $length = count($locations);
+        $pair = [];
         for($i = 1; $i < $length && $same; $i++) {
             if($locations[$i]['latitude'] !== $locations[$i-1]['latitude']
               && $locations[$i]['longitude'] !== $locations[$i-1]['longitude'])
@@ -48,11 +49,13 @@ class Utilities {
         if($same && $length > 0) {
             $latitude=$locations[0]['latitude'];
             $longitude=$locations[0]['longitude'];
-            session(['latitude'=> $latitude, 'longitude' => $longitude]);
+            $pair[] = ['latitude'=> $latitude, 'longitude' => $longitude];
         }
         else {
-            session(['latitude' => Utilities::defaultLatitude,
-                     'longitude' => Utilities::defaultLongitude]);
+            $pair[] = ['latitude' => Utilities::defaultLatitude,
+                       'longitude' => Utilities::defaultLongitude];
         }
+        
+        return $pair;
     }
 }

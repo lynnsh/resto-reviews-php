@@ -21,13 +21,14 @@ class GeoController extends Controller {
     
     public function locate(Request $request) {
         if($request['error'] == 0) {
-            session(['latitude'=> $request['latitude'],
+            session(['latitude' => $request['latitude'],
                      'longitude' => $request['longitude']]);
         }
         else {
             $this -> validate($request, ['postal' => Utilities::postalRegex]);
             $util = new Utilities();
-            $util -> GetGeocodingSearchResults($request['postal']);
+            $pair = $util -> GetGeocodingSearchResults($request['postal']);
+            session(['latitude'=> $pair('latitude'), 'longitude' => $pair('longitude')]);
         }
         return redirect('/resto');
     }

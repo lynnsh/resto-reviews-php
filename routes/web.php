@@ -14,11 +14,15 @@
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-Route::get('/', 'HomeController@index');
+Route::get('/', 'RestoController@index');
 Route::post('/geo', 'GeoController@locate');
 Route::get('/geo', 'GeoController@index');
 Route::get('/resto', 'RestoController@index');
 Route::get('/resto/view/{resto}', 'RestoController@view');
 Route::get('/resto/create', 'RestoController@create');
+Route::post('/resto/create', 'RestoController@create');
+Route::get('/resto/search', 'RestoController@search');
 Route::get('/resto/edit/{resto}', 'RestoController@edit');
+Route::post('/resto/edit/{resto}', 'RestoController@edit');
 Route::get('/resto/add-review/{resto}', 'RestoController@add_review');
+Route::post('/resto/add-review/{resto}', 'RestoController@add_review');

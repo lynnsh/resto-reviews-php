@@ -2,6 +2,11 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/aline/Documents/MyDocuments/education/college/sem5/php/PHPCode/Projects/laravel/resto/resources/views/resto/view.blade.php</file>
+            <file>file:/home/aline/Documents/MyDocuments/education/college/sem5/php/PHPCode/Projects/laravel/resto/resources/views/resto/index.blade.php</file>
+            <file>file:/home/aline/Documents/MyDocuments/education/college/sem5/php/PHPCode/Projects/laravel/resto/routes/web.php</file>
+            <file>file:/home/aline/Documents/MyDocuments/education/college/sem5/php/PHPCode/Projects/laravel/resto/app/Http/Controllers/RestoController.php</file>
+        </group>
     </open-files>
 </project-private>
