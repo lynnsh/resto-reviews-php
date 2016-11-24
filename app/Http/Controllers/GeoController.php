@@ -15,7 +15,7 @@ class GeoController extends Controller {
     public function index(){
         $lat = session('latitude');
         if(isset($lat))
-            return redirect('/home');
+            return redirect('/resto');
         return view('geo.index');
     }
     
@@ -29,6 +29,6 @@ class GeoController extends Controller {
             $util = new Utilities();
             $util -> GetGeocodingSearchResults($request['postal']);
         }
-        return redirect('/home');
+        return redirect('/resto');
     }
 }

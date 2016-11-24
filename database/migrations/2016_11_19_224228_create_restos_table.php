@@ -17,6 +17,7 @@ class CreateRestosTable extends Migration
 		Schema::create('restos', function(Blueprint $table){
 			$table->increments('id');
 			$table->string('name');
+            $table->string('genre');
 			$table->string('price');
             $table->string('address');
             $table->decimal('latitude', 10, 6);	

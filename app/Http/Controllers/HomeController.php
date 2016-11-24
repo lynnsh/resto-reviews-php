@@ -25,6 +25,6 @@ class HomeController extends Controller
         if(! isset($lat))
             return redirect('/geo');
         else
-            return view('home');
+            return redirect('/resto');
     }
 }
