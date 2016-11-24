@@ -134,7 +134,7 @@
     @endif
     
     <div>
-        <a href='/resto' class="btn btn-default fa fa-btn fa-plus">Back</a>
+        <a href='/resto' class="btn btn-default fa fa-btn fa-plus">Home</a>
     </div>
     
 @endsection

@@ -38,39 +38,43 @@ class RestoController extends Controller {
         return view('resto.view', ['resto' => $resto, 'reviews' => $reviews]);
     }
     
-    public function create(Request $request) {
-        if(!isset($request))
-            return view('resto.create');
-        else {
-            $this -> validate($request, ['name' => 'required|max:255',
-                                         'genre' => 'required|max:255',
-                                         'price' => array('required','regex:/\$|\$\$|\$\$\$|\$\$\$\$/'),
-                                         'address' => 'required|max:255',
-                                         'postalcode' => Utilities::postalRegex,
-                                         ]);
-            $util = new Utilities();
-            $pair = $util -> GetGeocodingSearchResults($request['postalcode']);
-            $request -> user() -> restos() -> create([
-                'name' => $request -> name, 'genre' => $request -> genre,
-                'price' => $request -> price, 'address' => $request -> address,
-                'latitude' => $pair['latitude'], 'longitude' => $pair['longitude'],              
-            ]);           
-            return redirect('/');
-        }
+    public function create() {
+        return view('resto.create');
+    }
+    
+    public function create_resto(Request $request) {
+        $this -> validate($request, ['name' => 'required|max:255',
+                                     'genre' => 'required|max:255',
+                                     'price' => array('required','regex:/\$|\$\$|\$\$\$|\$\$\$\$/'),
+                                     'address' => 'required|max:255',
+                                     'postalcode' => Utilities::postalRegex,
+                                    ]);
+        $util = new Utilities();
+        $pair = $util -> GetGeocodingSearchResults($request['postalcode']);
+        $request -> user() -> restos() -> create([
+            'name' => $request -> name, 'genre' => $request -> genre,
+            'price' => $request -> price, 'address' => $request -> address,
+            'latitude' => $pair['latitude'], 'longitude' => $pair['longitude'],              
+        ]);           
+        return redirect('/');
     }
     
     public function search(Request $request) {
         $key = $request['key'];
-        $restos = Resto::select('restos.*') -> where('name', 'like', $key) 
-                -> orWhere('name', 'like', $key) 
-                -> orWhere('name', 'like', $key)
-                -> paginate(20);
+        $restos = Resto::where('name', 'like', '%'.$key.'%') 
+                -> orWhere('genre', 'like', '%'.$key.'%') 
+                -> orWhere('address', 'like', '%'.$key.'%')
+                -> paginate(1);
         return view('resto.search', ['restos' => $restos, 
                                     'add' => $this -> getRatingAndReviews($restos),
-                                    'index' => 0]);
+                                    'index' => 0, 'key' => $key]);
     }
     
     public function edit(Resto $resto) {
+        
+    }
+    
+    public function edit_resto(Request $request) {
         
     }
     
@@ -78,8 +82,11 @@ class RestoController extends Controller {
         
     }
     
+    public function add_review_resto(Request $request) {
+        
+    }
+    
     public function getRestosNear($latitude, $longitude, $radius = 50) {
-        //eager loading?
         $restos = Resto::select('restos.*')
             ->selectRaw('( 6371 * acos( cos( radians(?) ) *
                                cos( radians( latitude ) )

@@ -1,13 +1,12 @@
 <!-- resources/views/resto/search.blade.php -->
 
 @extends('layouts.app')
-
 @section('content')
 
     @if (count($restos) > 0)
         <div class="panel panel-default">
             <div class="panel-heading">
-                Nearby Restaurants:
+                Search Results:
             </div>
 
             <div class="panel-body">
@@ -45,15 +44,6 @@
                                 <td>
                                     <a href="{{ url('resto/view/'.$resto->id) }}" class=
                                        "btn btn-info fa fa-btn fa-plus">View..</a>
-                                    <!-- <form action="{{ url('resto/'.$resto->id) }}" method="POST">
-                                        {{ csrf_field() }}
-
-                                        <button type="submit"
-                                                id="view-resto-{{ $resto->id }}" 
-                                                class="btn btn-info">
-                                            <i class="fa fa-btn fa-plus"></i>View..
-                                        </button>
-                                    </form> -->
                                 </td>
                             </tr>
                         @endforeach
@@ -61,12 +51,14 @@
                 </table>
             </div>
         </div>
+    
+    {{ $restos->appends(Request::only('key'))->links() }}   
     @endif
-    {{ $restos->links() }}
+    
     
     
     <div>
-        <a href='/resto' class="btn btn-default fa fa-btn fa-plus">Back</a>
+        <a href='/resto' class="btn btn-default fa fa-btn fa-plus">Home</a>
     </div>
 @endsection
 
