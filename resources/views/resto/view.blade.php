@@ -119,6 +119,8 @@
             </div>
         </div>
     @endif
+
+    {{ $reviews->links() }}
     
     @if (Auth::check())
         <!-- edit a resto -->
@@ -133,6 +135,6 @@
     
     <div>
             <a href='/resto' class="btn btn-default fa fa-btn fa-plus">Back</a>
-        </div>
+    </div>
     
 @endsection

@@ -28,7 +28,7 @@ class RestoController extends Controller
     
     //validation
     public function view(Resto $resto) {
-        $reviews = Review:: select('reviews.*') -> where('resto_id', '=', $resto->id)->get();
+        $reviews = Review:: select('reviews.*') -> where('resto_id', '=', $resto->id)->paginate(15);
         return view('resto.view', ['resto' => $resto, 'reviews' => $reviews]);
     }
     
