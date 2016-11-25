@@ -11,7 +11,7 @@ class Utilities {
     const defaultLatitude = '45.5016889';
     const defaultLongitude = '-73.5672560';
     const postalRegex = 'required|regex:'
-                . '/^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$/';
+                . '/^[A-Za-z][0-9][A-Za-z][ ]?[0-9][A-Za-z][0-9]$/';
     /*^((\d{5}-\d{4})|(\d{5})|([AaBbCcEeGgHhJjKkLlMmNnPpRrSsTtVvXxYy]\d[A-Za-z]\s?\d[A-Za-z]\d))$*/
     
     public function GetGeocodingSearchResults($address) {
@@ -49,11 +49,12 @@ class Utilities {
         if($same && $length > 0) {
             $latitude=$locations[0]['latitude'];
             $longitude=$locations[0]['longitude'];
-            $pair[] = ['latitude'=> $latitude, 'longitude' => $longitude];
+            $pair['latitude'] = $latitude; 
+            $pair['longitude'] = $longitude;
         }
         else {
-            $pair[] = ['latitude' => Utilities::defaultLatitude,
-                       'longitude' => Utilities::defaultLongitude];
+            $pair['latitude'] = Utilities::defaultLatitude; 
+            $pair['longitude'] = Utilities::defaultLongitude;
         }
         
         return $pair;

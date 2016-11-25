@@ -1,4 +1,4 @@
-<!-- resources/views/resto/create.blade.php -->
+<!-- resources/views/resto/edit.blade.php -->
 
 @extends('layouts.app')
 
@@ -6,13 +6,14 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            Add a new restaurant:
+            Edit &#34;{{$resto -> name}}&#34; restaurant:
         </div>
 
         <div class="panel-body">
             @include('common.errors')
-            <form action="{{ url('resto/create') }}" method="POST">
+            <form action="{{ url('resto/edit') }}" method="POST">
                 {{ csrf_field() }}
+                <input name="id" type="hidden" value="{{ $resto -> id }}">
             <table class="table table-striped resto-table">
             <!-- Table Body -->
             <tbody>
@@ -22,7 +23,7 @@
                     </td>
                     <td class="table-text">
                         <input id='name' type='text' name='name' class="form-control" 
-                               value="{{ old('name') }}" required/>
+                               value="{{ $resto ->  name }}" required/>
                     </td>
                 </tr>
                 <tr>
@@ -31,7 +32,7 @@
                     </td>
                     <td class="table-text">
                         <input id='genre' type='text' name='genre' class="form-control" 
-                               value="{{ old('genre') }}" required/>
+                               value="{{ $resto -> genre }}" required/>
                     </td>
                 </tr>
                 <tr>
@@ -40,7 +41,7 @@
                     </td>
                     <td class="table-text">
                         <input id='price' type='text' name='price' class="form-control" 
-                               value="{{ old('price') }}" required/>
+                               value="{{ $resto -> price }}" required/>
                     </td>
                 </tr>
                 <tr>
@@ -49,22 +50,12 @@
                     </td>
                     <td class="table-text">
                         <input id='address' type='text' name='address' class="form-control" 
-                               value="{{ old('address') }}" required/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="table-text">
-                        <div><b>Postal Code:</b></div>
-                    </td>
-                    <td class="table-text">
-                        <input id='postalcode' type='text' name='postalcode' class="form-control" 
-                               value="{{ old('postalcode') }}" required/>
+                               value="{{ $resto -> address }}" required/>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <button type="submit" id="create-ressto" 
-                                class="btn btn-info">Submit</button>
+                        <button type="submit" id="create-ressto" class="btn btn-info">Submit</button>
                     </td>
                 </tr>
             </tbody>

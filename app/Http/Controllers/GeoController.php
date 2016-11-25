@@ -28,7 +28,7 @@ class GeoController extends Controller {
             $this -> validate($request, ['postal' => Utilities::postalRegex]);
             $util = new Utilities();
             $pair = $util -> GetGeocodingSearchResults($request['postal']);
-            session(['latitude'=> $pair('latitude'), 'longitude' => $pair('longitude')]);
+            session(['latitude'=> $pair['latitude'], 'longitude' => $pair['longitude']]);
         }
         return redirect('/resto');
     }

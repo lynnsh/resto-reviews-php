@@ -45,17 +45,18 @@ class RestoController extends Controller {
     public function create_resto(Request $request) {
         $this -> validate($request, ['name' => 'required|max:255',
                                      'genre' => 'required|max:255',
-                                     'price' => array('required','regex:/\$|\$\$|\$\$\$|\$\$\$\$/'),
+                                     'price' => array('required','regex:/^\${1,4}$/'),
                                      'address' => 'required|max:255',
                                      'postalcode' => Utilities::postalRegex,
                                     ]);
         $util = new Utilities();
         $pair = $util -> GetGeocodingSearchResults($request['postalcode']);
+        $full_address = $request -> address.', '.$request['postalcode'];
         $request -> user() -> restos() -> create([
             'name' => $request -> name, 'genre' => $request -> genre,
-            'price' => $request -> price, 'address' => $request -> address,
+            'price' => $request -> price, 'address' => $full_address,
             'latitude' => $pair['latitude'], 'longitude' => $pair['longitude'],              
-        ]);           
+        ]);         
         return redirect('/');
     }
     
@@ -64,18 +65,33 @@ class RestoController extends Controller {
         $restos = Resto::where('name', 'like', '%'.$key.'%') 
                 -> orWhere('genre', 'like', '%'.$key.'%') 
                 -> orWhere('address', 'like', '%'.$key.'%')
-                -> paginate(1);
+                -> paginate(15);
         return view('resto.search', ['restos' => $restos, 
                                     'add' => $this -> getRatingAndReviews($restos),
                                     'index' => 0, 'key' => $key]);
     }
     
     public function edit(Resto $resto) {
-        
+        return view('resto.edit', ['resto' => $resto]);
     }
     
     public function edit_resto(Request $request) {
-        
+        $this -> validate($request, ['name' => 'required|max:255',
+                                     'genre' => 'required|max:255',
+                                     'price' => array('required','regex:/^\${1,4}$/'),
+                                     'address' => 'required|max:255',
+                                    ]);
+        $util = new Utilities();
+        $pair = $util -> GetGeocodingSearchResults($request['address']);
+        $resto = Resto::find($request -> id);
+        $resto -> name = $request -> name; 
+        $resto -> genre = $request -> genre;
+        $resto -> price = $request -> price;
+        $resto -> address = $request -> address;
+        $resto -> latitude = $pair['latitude'];
+        $resto -> longitude = $pair['longitude'];
+        $resto -> save();
+        return redirect('/');
     }
     
     public function add_review(Resto $resto) {
@@ -86,7 +102,7 @@ class RestoController extends Controller {
         
     }
     
-    public function getRestosNear($latitude, $longitude, $radius = 50) {
+    private function getRestosNear($latitude, $longitude, $radius = 50) {
         $restos = Resto::select('restos.*')
             ->selectRaw('( 6371 * acos( cos( radians(?) ) *
                                cos( radians( latitude ) )

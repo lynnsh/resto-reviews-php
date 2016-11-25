@@ -66,13 +66,13 @@ class RegisterController extends Controller
     {   
         $util = new Utilities();
         $pair = $util -> GetGeocodingSearchResults($data['postalcode']);
-        session(['latitude'=> $pair('latitude'), 'longitude' => $pair('longitude')]);
+        session(['latitude'=> $pair['latitude'], 'longitude' => $pair['longitude']]);
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'latitude' => $pair('latitude'),
-            'longitude' => $pair('longitude')
+            'latitude' => $pair['latitude'],
+            'longitude' => $pair['longitude']
         ]);
     }
 }

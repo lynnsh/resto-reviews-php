@@ -125,11 +125,13 @@
     @if (Auth::check())
         <!-- edit a resto -->
         <div>
-            <a href='/resto/edit' class="btn btn-warning fa fa-btn fa-plus">Edit this restaurant..</a>
+            <a href="{{ url('/resto/edit/'.$resto->id) }}" class="btn btn-warning fa fa-btn fa-plus">
+                Edit this restaurant..</a>
         </div>
         <!-- add a review -->
         <div>
-            <a href="{{ url('/resto/add-review'.$resto->id) }}" class="btn btn-info fa fa-btn fa-plus">Post new review..</a>
+            <a href="{{ url('/resto/add-review/'.$resto->id) }}" class="btn btn-info fa fa-btn fa-plus">
+                Post new review..</a>
         </div>
     @endif
     
