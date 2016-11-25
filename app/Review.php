@@ -11,7 +11,7 @@ class Review extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'rating', 'content'];
+    protected $fillable = ['title', 'rating', 'content', 'user_id' ]; //can assign??
     
     public function user() {
         return $this->belongsTo('App\User');

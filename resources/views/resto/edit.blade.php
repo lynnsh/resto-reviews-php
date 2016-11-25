@@ -12,8 +12,8 @@
         <div class="panel-body">
             @include('common.errors')
             <form action="{{ url('resto/edit') }}" method="POST">
-                {{ csrf_field() }}
-                <input name="id" type="hidden" value="{{ $resto -> id }}">
+            {{ csrf_field() }}
+            <input name="id" type="hidden" value="{{ $resto -> id }}">
             <table class="table table-striped resto-table">
             <!-- Table Body -->
             <tbody>

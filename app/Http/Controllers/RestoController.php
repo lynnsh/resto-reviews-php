@@ -76,7 +76,7 @@ class RestoController extends Controller {
     }
     
     public function edit_resto(Request $request) {
-        $this -> validate($request, ['name' => 'required|max:255',
+        $this -> validate($request, ['name' => 'required|max:100',
                                      'genre' => 'required|max:255',
                                      'price' => array('required','regex:/^\${1,4}$/'),
                                      'address' => 'required|max:255',
@@ -95,11 +95,22 @@ class RestoController extends Controller {
     }
     
     public function add_review(Resto $resto) {
-        
+        return view('resto.add-review', ['resto' => $resto]);
     }
     
     public function add_review_resto(Request $request) {
-        
+        $this -> validate($request, ['title' => 'required|max:50',
+                                     'content' => 'required|max:255',
+                                     'rating' => array('required','regex:/^[1-5]$/'),
+                                    ]);
+        $id = $request -> resto_id;
+        Resto::find($id) -> reviews() -> create([
+                'user_id' => $request -> user() -> id,
+                'title' => $request -> title, 
+                'content' => $request -> content,
+                'rating' => $request -> rating,            
+            ]);         
+        return redirect("resto/view/$id");
     }
     
     private function getRestosNear($latitude, $longitude, $radius = 50) {
