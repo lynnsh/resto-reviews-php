@@ -89,14 +89,13 @@
         </div>
     @endif
     
-    @if (count($reviews) > 0)
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4>Reviews:</h4>
             </div>
 
             <div class="panel-body">
-                @foreach ($reviews as $review)
+                @forelse ($reviews as $review)
                 <div class="row well">
                     <div class="col-sm-2">
                         <div class="row user-review"><b>user:</b> {{ $review ->user->name }}</div>
@@ -111,11 +110,12 @@
                         @endif                    
                     </div>  
                 </div>
-                @endforeach
+                @empty
+                    <p class="nodata">There are no reviews yet. Be the first to add the review!</p>
+                @endforelse
         
             </div>
         </div>
-    @endif
 
     {{ $reviews->links() }}
     

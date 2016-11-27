@@ -50,14 +50,15 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-    
+        </div>   
     {{ $restos->appends(Request::only('key'))->links() }}   
+    @else
+        <p class="nodata">No results available.</p>
     @endif
     
     
     
-    <div>
+    <div class="btn-option">
         <a href='/resto' class="btn btn-default fa fa-btn fa-plus">Home</a>
     </div>
 @endsection

@@ -67,6 +67,8 @@
                 </table>
             </div>
         </div>
+    @else
+        <p class="nodata">No results available.</p>
     @endif
     
     @if ( Auth::check()  )
