@@ -6,7 +6,7 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            Edit &#34;{{$resto -> name}}&#34; restaurant:
+            <h3>Edit &#34;{{$resto -> name}}&#34; restaurant:</h3>
         </div>
 
         <div class="panel-body">
@@ -22,7 +22,7 @@
                         <div><b>Name:</b></div>
                     </td>
                     <td class="table-text">
-                        <input id='name' type='text' name='name' class="form-control" 
+                        <input id='name' type='text' name='name' class="form-control edit-control" 
                                value="{{ $resto ->  name }}" required/>
                     </td>
                 </tr>
@@ -31,7 +31,7 @@
                         <div><b>Genre:</b></div>
                     </td>
                     <td class="table-text">
-                        <input id='genre' type='text' name='genre' class="form-control" 
+                        <input id='genre' type='text' name='genre' class="form-control edit-control" 
                                value="{{ $resto -> genre }}" required/>
                     </td>
                 </tr>
@@ -40,7 +40,7 @@
                         <div><b>Price:</b></div>
                     </td>
                     <td class="table-text">
-                        <input id='price' type='text' name='price' class="form-control" 
+                        <input id='price' type='text' name='price' class="form-control edit-control" 
                                value="{{ $resto -> price }}" required/>
                     </td>
                 </tr>
@@ -49,13 +49,13 @@
                         <div><b>Address:</b></div>
                     </td>
                     <td class="table-text">
-                        <input id='address' type='text' name='address' class="form-control" 
+                        <input id='address' type='text' name='address' class="form-control edit-control" 
                                value="{{ $resto -> address }}" required/>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <button type="submit" id="create-ressto" class="btn btn-info">Submit</button>
+                        <button type="submit" id="edit-resto" class="btn btn-info">Submit</button>
                     </td>
                 </tr>
             </tbody>

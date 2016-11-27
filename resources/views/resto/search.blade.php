@@ -6,7 +6,7 @@
     @if (count($restos) > 0)
         <div class="panel panel-default">
             <div class="panel-heading">
-                Search Results:
+                <h4>Search Results:</h4>
             </div>
 
             <div class="panel-body">

@@ -4,18 +4,25 @@
 @section('content')
     <div class='resto-search'>
         <form action="{{ url('resto/search') }}" method="GET">
-            <label for="key">Search:</label>
-            <input id='key' type='text' name='key' class="form-control" value="{{ old('key') }}" required/>
-            <button type="submit" id="resto-search" class="btn btn-info">
-                <i class="glyphicon glyphicon-search"></i>
-            </button>
+            <div class="form-group row">
+                <label for="key" class="col-sm-4 control-label lbl-key">Search:</label>
+                <div class="col-sm-4">
+                    <input id='key' type='text' name='key' class="form-control" 
+                           value="{{ old('key') }}" required/>
+                </div>
+                <div class="col-sm-4">
+                    <button type="submit" id="resto-search" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+            </div>
         </form>
     </div>
 
     @if (count($restos) > 0)
         <div class="panel panel-default">
             <div class="panel-heading">
-                Nearby Restaurants:
+                <h3>Nearby Restaurants:</h3>
             </div>
 
             <div class="panel-body">
@@ -64,7 +71,9 @@
     
     @if ( Auth::check()  )
         {{-- add a resto --}}
-        <a href='/resto/create' class="btn btn-warning fa fa-btn fa-plus">Add new restaurant..</a>
+        <div class="btn-option">
+            <a href='/resto/create' class="btn btn-warning fa fa-btn fa-plus">Add new restaurant..</a>
+        </div>
     @endif
     
 @endsection

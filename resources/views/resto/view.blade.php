@@ -3,10 +3,17 @@
 @extends('layouts.app')
 
 @section('content')
-
+    @if (Auth::check())
+        {{-- edit a resto --}}
+        <div class="btn-option">
+            <a href="{{ url('/resto/edit/'.$resto->id) }}" class="btn btn-warning fa fa-btn fa-plus">
+                Edit this restaurant..</a>
+        </div>
+    @endif
+    
     <div class="panel panel-default">
         <div class="panel-heading">
-            {{ $resto->name }} information:
+            <h3>&#34;{{ $resto->name }}&#34; information:</h3>
         </div>
 
         <div class="panel-body">
@@ -74,92 +81,45 @@
         </div>
     </div>
         
+    @if (Auth::check())
+        {{-- add a review --}}
+        <div class="btn-option">
+            <a href="{{ url('/resto/add-review/'.$resto->id) }}" class="btn btn-info fa fa-btn fa-plus">
+                Post new review..</a>
+        </div>
+    @endif
+    
     @if (count($reviews) > 0)
         <div class="panel panel-default">
             <div class="panel-heading">
-                Reviews:
+                <h4>Reviews:</h4>
             </div>
 
             <div class="panel-body">
-                <table class="table review-table">
-
-                    {{-- Table Body --}}
-                    <tbody>
-                    @foreach ($reviews as $review)
-                        <tr>
-                            <td class="table-text">
-                                <div>Title:</div>
-                            </td>
-                            <td class="table-text">
-                                <div>{{ $review->title }}</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="table-text">
-                                <div>Content:</div>
-                            </td>
-                            <td class="table-text">
-                                <div>{{ $review->content }}</div>
-                            </td>
-                        </tr>
-                        <tr>
-                             <td class="table-text">
-                                <div>Rating:</div>
-                            </td>
-                            <td class="table-text">
-                                <div>{{ $review->rating }}</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="table-text">
-                                <div>Created:</div>
-                            </td>
-                            <td class="table-text">
-                                <div>{{ $review->created_at }}</div>
-                            </td>
-                        </tr>
-                        @if($review->updated_at != $review->created_at)
-                        <tr>
-                            <td class="table-text">
-                                <div>Updated:</div>
-                            </td>
-                            <td class="table-text">
-                                <div>{{ $review->updated_at }}</div>
-                            </td>
-                        </tr>
-                        @endif
-                        <tr>
-                            <td class="table-text">
-                                <div>User:</div>
-                            </td>
-                            <td class="table-text">
-                                <div>{{ $review ->user->name }}</div>
-                            </td>
-                        </tr>
-                        <tr><td colspan='2'><hr></td></tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                @foreach ($reviews as $review)
+                <div class="row well">
+                    <div class="col-sm-2">
+                        <div class="row user-review"><b>user:</b> {{ $review ->user->name }}</div>
+                    </div>
+                    <div class="well review col-sm-4">
+                        <div class="row"><b>{{ $review->title }}</b></div>
+                        <div class="row">{{ $review->content }}</div>
+                        <div class="row"><b>rating:</b> {{ $review->rating }}</div>
+                        <div class="row"><b>created:</b> {{ $review->created_at }}</div>
+                        @if($review->updated_at != $review->created_at && isset($review->updated_at))
+                            <div class="row"><b>updated:</b> {{ $review->updated_at }}</div>
+                        @endif                    
+                    </div>  
+                </div>
+                @endforeach
+        
             </div>
         </div>
     @endif
 
     {{ $reviews->links() }}
     
-    @if (Auth::check())
-        {{-- edit a resto --}}
-        <div>
-            <a href="{{ url('/resto/edit/'.$resto->id) }}" class="btn btn-warning fa fa-btn fa-plus">
-                Edit this restaurant..</a>
-        </div>
-        {{-- add a review --}}
-        <div>
-            <a href="{{ url('/resto/add-review/'.$resto->id) }}" class="btn btn-info fa fa-btn fa-plus">
-                Post new review..</a>
-        </div>
-    @endif
-    
-    <div>
+    <div class="btn-option">
         <a href='/resto' class="btn btn-default fa fa-btn fa-plus">Home</a>
     </div>
     

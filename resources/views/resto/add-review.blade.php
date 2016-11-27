@@ -6,7 +6,7 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            Add a review for &#34;{{$resto -> name}}&#34; restaurant:
+            <h4>Add a review for &#34;{{$resto -> name}}&#34; restaurant:</h4>
         </div>
 
         <div class="panel-body">
@@ -22,7 +22,7 @@
                             <div>Title:</div>
                         </td>
                         <td class="table-text">
-                            <input id='title' type='text' name='title' class="form-control" 
+                            <input id='title' type='text' name='title' class="form-control edit-control" 
                                value="{{ old('title') }}" required/>
                         </td>
                     </tr>
@@ -31,7 +31,7 @@
                             <div>Content:</div>
                         </td>
                         <td class="table-text">
-                            <input id='content' type='text' name='content' class="form-control" 
+                            <input id='content' type='text' name='content' class="form-control edit-control" 
                                value="{{ old('content') }}" required/>
                         </td>
                     </tr>
@@ -40,13 +40,13 @@
                             <div>Rating:</div>
                         </td>
                         <td class="table-text">
-                            <input id='rating' type='text' name='rating' class="form-control" 
+                            <input id='rating' type='text' name='rating' class="form-control edit-control" 
                                value="{{ old('rating') }}" required/>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <button type="submit" id="create-ressto" 
+                            <button type="submit" id="create-review" 
                                     class="btn btn-info">Submit</button>
                         </td>
                     </tr>
@@ -56,7 +56,7 @@
         </div>
     </div>
     
-    <div>
+    <div class="btn-option">
         <a href='/resto' class="btn btn-default fa fa-btn fa-plus">Home</a>
     </div>
     

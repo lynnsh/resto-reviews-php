@@ -10,10 +10,10 @@
 
     <title>{{ config('app.name', 'Restaurant Reviews') }}</title>
 
-    {{-- Styles --}}
-    <link href="/css/app.css" rel="stylesheet">
+    {{-- Styles --}}   
     <link rel="stylesheet" href=
        "http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href="/css/app.css" rel="stylesheet">
 
     {{-- Scripts --}}
     <script>
