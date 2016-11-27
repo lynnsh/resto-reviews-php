@@ -68,7 +68,7 @@
             </div>
         </div>
     @else
-        <p class="nodata">No results available.</p>
+        <p class="nodata">No restaurants added.</p>
     @endif
     
     @if ( Auth::check()  )
