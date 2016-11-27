@@ -1,4 +1,4 @@
-<!-- resources/views/resto/edit.blade.php -->
+{{-- resources/views/resto/edit.blade.php --}}
 
 @extends('layouts.app')
 
@@ -15,7 +15,7 @@
             {{ csrf_field() }}
             <input name="id" type="hidden" value="{{ $resto -> id }}">
             <table class="table table-striped resto-table">
-            <!-- Table Body -->
+            {{-- Table Body --}}
             <tbody>
                 <tr>
                     <td class="table-text">

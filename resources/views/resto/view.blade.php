@@ -1,4 +1,4 @@
-<!-- resources/views/resto/view.blade.php -->
+{{-- resources/views/resto/view.blade.php --}}
 
 @extends('layouts.app')
 
@@ -11,7 +11,7 @@
 
         <div class="panel-body">
             <table class="table table-striped resto-table">
-                <!-- Table Body -->
+                {{-- Table Body --}}
                 <tbody>
                     <tr>
                         <td class="table-text">
@@ -83,7 +83,7 @@
             <div class="panel-body">
                 <table class="table review-table">
 
-                    <!-- Table Body -->
+                    {{-- Table Body --}}
                     <tbody>
                     @foreach ($reviews as $review)
                         <tr>
@@ -147,12 +147,12 @@
     {{ $reviews->links() }}
     
     @if (Auth::check())
-        <!-- edit a resto -->
+        {{-- edit a resto --}}
         <div>
             <a href="{{ url('/resto/edit/'.$resto->id) }}" class="btn btn-warning fa fa-btn fa-plus">
                 Edit this restaurant..</a>
         </div>
-        <!-- add a review -->
+        {{-- add a review --}}
         <div>
             <a href="{{ url('/resto/add-review/'.$resto->id) }}" class="btn btn-info fa fa-btn fa-plus">
                 Post new review..</a>

@@ -1,4 +1,4 @@
-<!-- resources/views/resto/add-review.blade.php -->
+{{-- resources/views/resto/add-review.blade.php --}}
 
 @extends('layouts.app')
 
@@ -15,7 +15,7 @@
             {{ csrf_field() }}
             <input name="resto_id" type="hidden" value="{{ $resto -> id }}"/>
             <table class="table table-striped resto-table">
-            <!-- Table Body -->
+            {{-- Table Body --}}
                 <tbody>
                     <tr>
                         <td class="table-text">

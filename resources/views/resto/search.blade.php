@@ -1,4 +1,4 @@
-<!-- resources/views/resto/search.blade.php -->
+{{-- resources/views/resto/search.blade.php --}}
 
 @extends('layouts.app')
 @section('content')
@@ -12,7 +12,7 @@
             <div class="panel-body">
                 <table class="table table-striped resto-table">
 
-                    <!-- Table Headings -->
+                    {{-- Table Headings --}}
                     <thead>
                         <th>Name</th>
                         <th>Genre</th>
@@ -22,7 +22,7 @@
                         <th>&nbsp;</th>
                     </thead>
 
-                    <!-- Table Body -->
+                    {{-- Table Body --}}
                     <tbody>
                         @foreach ($restos as $resto)
                             <tr>

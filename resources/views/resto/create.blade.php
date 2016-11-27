@@ -1,4 +1,4 @@
-<!-- resources/views/resto/create.blade.php -->
+{{-- resources/views/resto/create.blade.php --}}
 
 @extends('layouts.app')
 

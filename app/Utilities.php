@@ -15,9 +15,38 @@ class Utilities {
                 . '/^[A-Za-z][0-9][A-Za-z][ ]?[0-9][A-Za-z][0-9]$/';
     /*^((\d{5}-\d{4})|(\d{5})|([AaBbCcEeGgHhJjKkLlMmNnPpRrSsTtVvXxYy]\d[A-Za-z]\s?\d[A-Za-z]\d))$*/
     
+    
+    public function getRestosNear($number, $latitude, $longitude, 
+                                  $radius = 50) {
+        $restos = Resto::select('restos.*')
+            ->selectRaw('( 6371 * acos( cos( radians(?) ) *
+                               cos( radians( latitude ) )
+                               * cos( radians( longitude ) - radians(?))
+                               + sin( radians(?) ) *
+                               sin( radians(latitude ) ) )
+                             ) AS distance', [$latitude, $longitude, $latitude])
+            ->whereRaw("'distance' < ? ", [$radius])
+            ->orderBy('distance')->take($number)->get();       
+        return $restos;
+    }
+    
+    public function addResto($request) {
+        $address = !empty($request['postalcode']) ? 
+                            $request['postalcode'] : $request['address'];
+        $pair = $this -> GetGeocodingSearchResults($address);
+        $full_address = $request['address'].' '.$request['postalcode'];
+        return $request -> user() -> restos() -> create([
+            'name' => $request -> name, 'genre' => $request -> genre,
+            'price' => $request -> price, 'address' => $full_address,
+            'latitude' => $pair['latitude'], 'longitude' => $pair['longitude'],              
+        ]);        
+    }
+    
     public function GetGeocodingSearchResults($address) {
-        $address = urlencode($address); //Url encode since it was provided by user
-        $url = "http://maps.google.com/maps/api/geocode/xml?address={$address}&sensor=false";
+        //Url encode since it was provided by user
+        $address = urlencode($address); 
+        $url = "http://maps.google.com/maps/api/geocode/xml?address={$address}"
+              ."&sensor=false";
         $pairs = [];
         
         // Retrieve the XML file

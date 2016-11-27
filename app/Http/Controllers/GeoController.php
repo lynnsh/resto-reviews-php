@@ -8,7 +8,7 @@ use App\Utilities;
 class GeoController extends Controller {
     
     /**
-     * Show the application dashboard.
+     * 
      *
      * @return \Illuminate\Http\Response
      */

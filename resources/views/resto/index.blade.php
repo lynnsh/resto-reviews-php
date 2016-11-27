@@ -1,4 +1,4 @@
-<!-- resources/views/resto/index.blade.php -->
+{{-- resources/views/resto/index.blade.php --}}
 
 @extends('layouts.app')
 @section('content')
@@ -21,7 +21,7 @@
             <div class="panel-body">
                 <table class="table table-striped resto-table">
 
-                    <!-- Table Headings -->
+                    {{-- Table Headings --}}
                     <thead>
                         <th>Name</th>
                         <th>Genre</th>
@@ -31,7 +31,7 @@
                         <th>&nbsp;</th>
                     </thead>
 
-                    <!-- Table Body -->
+                    {{-- Table Body --}}
                     <tbody>
                         @foreach ($restos as $resto)
                             <tr>
@@ -53,15 +53,6 @@
                                 <td>
                                     <a href="{{ url('resto/view/'.$resto->id) }}" class=
                                        "btn btn-info fa fa-btn fa-plus">View..</a>
-                                    <!-- <form action="{{ url('resto/'.$resto->id) }}" method="POST">
-                                        {{ csrf_field() }}
-
-                                        <button type="submit"
-                                                id="view-resto-{{ $resto->id }}" 
-                                                class="btn btn-info">
-                                            <i class="fa fa-btn fa-plus"></i>View..
-                                        </button>
-                                    </form> -->
                                 </td>
                             </tr>
                         @endforeach
@@ -72,7 +63,7 @@
     @endif
     
     @if ( Auth::check()  )
-        <!-- add a resto -->
+        {{-- add a resto --}}
         <a href='/resto/create' class="btn btn-warning fa fa-btn fa-plus">Add new restaurant..</a>
     @endif
     

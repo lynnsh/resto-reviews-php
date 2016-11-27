@@ -17,10 +17,10 @@ class RestoController extends Controller {
         $lat = session('latitude');
         if(! isset($lat))
             return redirect('/geo');
-        $restos = $this -> getRestosNear($lat, session('longitude'));         
+        $util = new Utilities();
+        $restos = $util -> getRestosNear(20, $lat, session('longitude'));         
         return view('resto.index', ['restos' => $restos, 
-                                    'add' => $this -> getRatingAndReviews($restos),
-                                    'index' => 0]);
+            'add' => $this -> getRatingAndReviews($restos), 'index' => 0]);
     }
     
     
@@ -47,14 +47,7 @@ class RestoController extends Controller {
                 .'regex:/^[A-Za-z][0-9][A-Za-z][ ]?[0-9][A-Za-z][0-9]$/',
         ]);
         $util = new Utilities();
-        $address = !empty($request['postalcode']) ? $request['postalcode'] : $request['address'];
-        $pair = $util -> GetGeocodingSearchResults($address);
-        $full_address = $request['address'].' '.$request['postalcode'];
-        $resto = $request -> user() -> restos() -> create([
-            'name' => $request -> name, 'genre' => $request -> genre,
-            'price' => $request -> price, 'address' => $full_address,
-            'latitude' => $pair['latitude'], 'longitude' => $pair['longitude'],              
-        ]);         
+        $resto = $util -> addResto($request);        
         return redirect('/resto/view/'.$resto->id);
     }
     
@@ -68,8 +61,8 @@ class RestoController extends Controller {
                 -> orWhere('address', 'like', '%'.$key.'%')
                 -> paginate(15);
         return view('resto.search', ['restos' => $restos, 
-                                    'add' => $this -> getRatingAndReviews($restos),
-                                    'index' => 0, 'key' => $key]);
+            'add' => $this -> getRatingAndReviews($restos),
+            'index' => 0, 'key' => $key]);
     }
     
     public function edit(Resto $resto) {
@@ -78,11 +71,10 @@ class RestoController extends Controller {
     }
     
     public function edit_resto(Request $request) {
-        $this -> validate($request, ['name' => 'required|max:100',
-                                     'genre' => 'required|max:255',
-                                     'price' => array('required','regex:/^\${1,4}$/'),
-                                     'address' => 'required|max:255',
-                                    ]);
+        $this -> validate($request, [
+            'name' => 'required|max:100', 'genre' => 'required|max:255',
+            'price' => array('required','regex:/^\${1,4}$/'),
+            'address' => 'required|max:255']);
         $util = new Utilities();
         $pair = $util -> GetGeocodingSearchResults($request['address']);
         $resto = Resto::find($request -> id);
@@ -102,10 +94,9 @@ class RestoController extends Controller {
     }
     
     public function add_review_resto(Request $request) {
-        $this -> validate($request, ['title' => 'required|max:50',
-                                     'content' => 'required|max:255',
-                                     'rating' => array('required','regex:/^[1-5]$/'),
-                                    ]);
+        $this -> validate($request, [
+            'title' => 'required|max:50', 'content' => 'required|max:255',
+            'rating' => array('required','regex:/^[1-5]$/')]);
         $id = $request -> resto_id;
         Resto::find($id) -> reviews() -> create([
                 'user_id' => $request -> user() -> id,
@@ -116,24 +107,11 @@ class RestoController extends Controller {
         return redirect("resto/view/$id");
     }
     
-    private function getRestosNear($latitude, $longitude, $radius = 50) {
-        $restos = Resto::select('restos.*')
-            ->selectRaw('( 6371 * acos( cos( radians(?) ) *
-                               cos( radians( latitude ) )
-                               * cos( radians( longitude ) - radians(?))
-                               + sin( radians(?) ) *
-                               sin( radians(latitude ) ) )
-                             ) AS distance', [$latitude, $longitude, $latitude])
-            ->whereRaw("'distance' < ? ", [$radius])
-            ->orderBy('distance')->take(20)->get();
-        
-        return $restos;
-    }
-    
     private function getRatingAndReviews($restos) {
         $add = [];
         foreach($restos as $resto) {
-            $rating = number_format($resto -> reviews() -> avg('rating'), 2, '.', '') ?? 0;
+            $rating = number_format($resto -> reviews() 
+                            -> avg('rating'), 2, '.', '') ?? 0;
             $add[] = ['reviews' => $resto -> reviews() -> count(),
                       'rating' => $rating];
         }
