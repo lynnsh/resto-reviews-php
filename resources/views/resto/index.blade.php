@@ -1,9 +1,7 @@
 <!-- resources/views/resto/index.blade.php -->
 
 @extends('layouts.app')
-
 @section('content')
-
     <div class='resto-search'>
         <form action="{{ url('resto/search') }}" method="GET">
             <label for="key">Search:</label>

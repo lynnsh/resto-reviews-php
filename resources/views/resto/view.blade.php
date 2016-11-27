@@ -53,6 +53,22 @@
                             <div>{{ $resto->latitude }}, {{ $resto->longitude }}</div>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="table-text">
+                            <div><b>Created at:</b></div>
+                        </td>
+                        <td class="table-text">
+                            <div>{{ $resto->created_at }}</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-text">
+                            <div><b>Added by:</b></div>
+                        </td>
+                        <td class="table-text">
+                            <div>{{ $resto ->user->name }}</div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -112,6 +128,14 @@
                             </td>
                         </tr>
                         @endif
+                        <tr>
+                            <td class="table-text">
+                                <div>User:</div>
+                            </td>
+                            <td class="table-text">
+                                <div>{{ $review ->user->name }}</div>
+                            </td>
+                        </tr>
                         <tr><td colspan='2'><hr></td></tr>
                     @endforeach
                     </tbody>

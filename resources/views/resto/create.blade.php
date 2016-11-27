@@ -49,7 +49,12 @@
                     </td>
                     <td class="table-text">
                         <input id='address' type='text' name='address' class="form-control" 
-                               value="{{ old('address') }}" required/>
+                               value="{{ old('address') }}"/>
+                    </td>
+                </tr>
+                <tr>
+                     <td class="table-text" colspan="2">
+                        <div>or</div>
                     </td>
                 </tr>
                 <tr>
@@ -58,7 +63,7 @@
                     </td>
                     <td class="table-text">
                         <input id='postalcode' type='text' name='postalcode' class="form-control" 
-                               value="{{ old('postalcode') }}" required/>
+                               value="{{ old('postalcode') }}"/>
                     </td>
                 </tr>
                 <tr>

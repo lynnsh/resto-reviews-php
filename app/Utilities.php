@@ -8,6 +8,7 @@ namespace App;
  * @author aline
  */
 class Utilities {
+    //Montreal location is the default
     const defaultLatitude = '45.5016889';
     const defaultLongitude = '-73.5672560';
     const postalRegex = 'required|regex:'

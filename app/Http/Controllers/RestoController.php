@@ -4,29 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Resto;
-use App\Review;
 use App\Utilities;
 
 class RestoController extends Controller {
-    
-     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct() {
-        $lat = session('latitude');
-        if(! isset($lat))
-            return redirect('/geo');
-    }
       
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {      
-        $restos = $this -> getRestosNear(session('latitude'), session('longitude'));         
+    public function index() {  
+        $lat = session('latitude');
+        if(! isset($lat))
+            return redirect('/geo');
+        $restos = $this -> getRestosNear($lat, session('longitude'));         
         return view('resto.index', ['restos' => $restos, 
                                     'add' => $this -> getRatingAndReviews($restos),
                                     'index' => 0]);
@@ -34,33 +25,43 @@ class RestoController extends Controller {
     
     
     public function view(Resto $resto) {
+        $lat = session('latitude');
+        if(! isset($lat))
+            return redirect('/geo');
         $reviews = $resto -> reviews() -> paginate(15);
         return view('resto.view', ['resto' => $resto, 'reviews' => $reviews]);
     }
     
     public function create() {
+        //$this->authorize('create');
         return view('resto.create');
     }
     
     public function create_resto(Request $request) {
-        $this -> validate($request, ['name' => 'required|max:255',
-                                     'genre' => 'required|max:255',
-                                     'price' => array('required','regex:/^\${1,4}$/'),
-                                     'address' => 'required|max:255',
-                                     'postalcode' => Utilities::postalRegex,
-                                    ]);
+        $this -> validate($request, [
+            'name' => 'required|max:255',
+            'genre' => 'required|max:255',
+            'price' => array('required','regex:/^\${1,4}$/'),
+            'address' => 'required_without_all:postalcode|max:255',
+            'postalcode' => 'required_without_all:address|'
+                .'regex:/^[A-Za-z][0-9][A-Za-z][ ]?[0-9][A-Za-z][0-9]$/',
+        ]);
         $util = new Utilities();
-        $pair = $util -> GetGeocodingSearchResults($request['postalcode']);
-        $full_address = $request -> address.', '.$request['postalcode'];
-        $request -> user() -> restos() -> create([
+        $address = !empty($request['postalcode']) ? $request['postalcode'] : $request['address'];
+        $pair = $util -> GetGeocodingSearchResults($address);
+        $full_address = $request['address'].' '.$request['postalcode'];
+        $resto = $request -> user() -> restos() -> create([
             'name' => $request -> name, 'genre' => $request -> genre,
             'price' => $request -> price, 'address' => $full_address,
             'latitude' => $pair['latitude'], 'longitude' => $pair['longitude'],              
         ]);         
-        return redirect('/');
+        return redirect('/resto/view/'.$resto->id);
     }
     
     public function search(Request $request) {
+        $lat = session('latitude');
+        if(! isset($lat))
+            return redirect('/geo');
         $key = $request['key'];
         $restos = Resto::where('name', 'like', '%'.$key.'%') 
                 -> orWhere('genre', 'like', '%'.$key.'%') 
@@ -72,6 +73,7 @@ class RestoController extends Controller {
     }
     
     public function edit(Resto $resto) {
+        $this->authorize('update', $resto);
         return view('resto.edit', ['resto' => $resto]);
     }
     
@@ -91,10 +93,11 @@ class RestoController extends Controller {
         $resto -> latitude = $pair['latitude'];
         $resto -> longitude = $pair['longitude'];
         $resto -> save();
-        return redirect('/');
+        return redirect('/resto/view/'.$resto->id);
     }
     
     public function add_review(Resto $resto) {
+        $this->authorize('update', $resto);
         return view('resto.add-review', ['resto' => $resto]);
     }
     
@@ -136,4 +139,5 @@ class RestoController extends Controller {
         }
         return $add;
     }
+
 }
