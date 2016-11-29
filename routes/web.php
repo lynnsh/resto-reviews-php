@@ -22,8 +22,8 @@ Route::get('/', 'RestoController@index');
 Route::get('/resto', 'RestoController@index');
 Route::get('/resto/view/{resto}', 'RestoController@view');
 
-Route::get('/resto/create', 'RestoController@create');
-Route::post('/resto/create', 'RestoController@create_resto');
+Route::get('/resto/create', 'RestoController@create') -> middleware('auth');
+Route::post('/resto/create', 'RestoController@create_resto') -> middleware('auth');
 
 Route::get('/resto/search', 'RestoController@search');
 

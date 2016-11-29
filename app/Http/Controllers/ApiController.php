@@ -8,16 +8,14 @@ use App\Utilities;
 
 class ApiController extends Controller
 {
-    public function restos($json) {
-        $location = json_decode($json, true);
+    public function restos(Request $request) {
         $util = new Utilities();
-        $restos = $util -> getRestosNear(10, $location['latitude'], $location['longitude']);
+        $restos = $util -> getRestosNear(10, $request['latitude'], $request['longitude']);
         return response()->json($restos);
     }
     
-    public function reviews($json) {
-        $resto_id = json_decode($json, true)['id'];
-        $reviews = Resto::find($resto_id) -> reviews();
+    public function reviews(Request $request) {
+        $reviews = Resto::find($request['resto_id']) -> reviews();
         return response()->json($reviews);
     }
     
