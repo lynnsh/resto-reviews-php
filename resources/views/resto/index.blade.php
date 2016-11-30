@@ -2,8 +2,6 @@
 
 @extends('layouts.app')
 @section('content')
-{{session('latitude')}}, 
-{{session('longitude')}}
     <div class='resto-search'>
         <form action="{{ url('resto/search') }}" method="GET">
             <div class="form-group row">
@@ -20,7 +18,10 @@
             </div>
         </form>
     </div>
-
+            {{count($restos)}},
+            {{$restos[0]->name}},
+            {{$index}}
+            {{$add[0]['rating']}}
     @if (count($restos) > 0)
         <div class="panel panel-default">
             <div class="panel-heading">
