@@ -26,7 +26,32 @@ class Utilities {
                                sin( radians(latitude ) ) )
                              ) AS distance', [$latitude, $longitude, $latitude])
             ->whereRaw("'distance' < ? ", [$radius])
-            ->orderBy('distance')->take($number)->get();       
+            ->orderBy('distance')->take($number)->get();    
+        
+        /*$subquery = Resto::select('*')
+                    ->selectRaw('( 6371 * acos( cos( radians(?) ) *
+                               cos( radians( latitude ) )
+                               * cos( radians( longitude ) - radians(?))
+                               + sin( radians(?) ) *
+                               sin( radians(latitude ) ) )
+                             ) AS distance', [$latitude, $longitude, $latitude]);
+        
+        $restos = \DB::select(\DB::raw('select * from'.' ( ' . $subquery->toSql() . ' ) AS t2 '))
+        $restos = Resto::selectRaw('*')
+                ->from(\DB::raw(' ( ' . $subquery->toSql() . ' ) AS t2 '))
+            ->whereRaw("'t2.distance' < ? ", [$radius])
+            ->orderBy('t2.distance')->take($number)->get();*/
+        /*$restos = \DB::select('select * from ('
+            .'select *, ( 6371 * acos( cos( radians(?) ) *cos( radians(latitude) ) '
+            .'*cos( radians(longitude) - radians(?) ) +sin( radians(?) ) '
+            .'*sin( radians(latitude) ) )) as distance from restos) '
+            .'as t2 where t2.distance < ? order by t2.distance ', 
+                [$latitude, $longitude, $latitude, $radius])
+            ->take($number)->get();*/
+        /*select * from (select *, ( 6371 * acos( cos( radians(45.5) ) 
+         * *cos( radians(latitude) ) *cos( radians(longitude) - radians(-73.55) )
+         *  +sin( radians(45.5) ) *sin( radians(latitude) ) )) as distance from restos) 
+         * as t2 where t2.distance < 50 order by t2.distance;*/
         return $restos;
     }
     
