@@ -19,9 +19,9 @@
         </form>
     </div>
             {{count($restos)}},
-            {{$restos[0]->name}},
-            {{$index}}
-            {{$add[0]['rating']}}
+            {{$index}}, 
+           <!-- {{$restos[0]->name}},          
+            {{$add[0]['rating']}} -->
     @if (count($restos) > 0)
         <div class="panel panel-default">
             <div class="panel-heading">
