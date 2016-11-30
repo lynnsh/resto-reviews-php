@@ -12,7 +12,8 @@
         <div class="panel-body">
             @include('common.errors')
             <form action="{{ url('resto/create') }}" method="POST">
-                {{ csrf_field() }}
+            {{method_field('put')}}
+            {{ csrf_field() }}
             <table class="table table-striped resto-table">
             <!-- Table Body -->
             <tbody>

@@ -2,6 +2,8 @@
 
 @extends('layouts.app')
 @section('content')
+{{session('latitude')}}, 
+{{session('longitude')}}
     <div class='resto-search'>
         <form action="{{ url('resto/search') }}" method="GET">
             <div class="form-group row">
