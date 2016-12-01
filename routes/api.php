@@ -18,7 +18,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 Route::get('api/restos', 'ApiController@restos');
-Route::get('api/reviews/{resto}', 'ApiController@reviews');
+Route::get('api/reviews/', 'ApiController@reviews');
 
 Route::post('api/create', 'ApiController@create');
 Route::post('api/add-review', 'ApiController@add_review');
