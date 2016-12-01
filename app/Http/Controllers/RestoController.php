@@ -104,5 +104,16 @@ class RestoController extends Controller {
             ]);         
         return redirect("resto/view/$id");
     }
+    
+    private function getRatingAndReviews($restos) {
+        $add = [];
+        foreach($restos as $resto) {
+            $rating = number_format($resto -> reviews() 
+                            -> avg('rating'), 2, '.', '') ?? 0;
+            $add[] = ['reviews' => $resto -> reviews() -> count(),
+                      'rating' => $rating];
+        }
+        return $add;
+    }
 
 }
