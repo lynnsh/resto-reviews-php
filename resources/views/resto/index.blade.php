@@ -52,10 +52,10 @@
                                     <div>{{ $resto->price }}</div>
                                 </td>
                                 <td class="table-text">
-                                    <div>{{ $resto->reviews}}</div>
+                                    <div>{{ $resto->reviews ?? 0}}</div>
                                 </td>
                                 <td class="table-text">
-                                    <div>{{ $resto->rating ?? 0 }}</div>
+                                    <div>{{ number_format($resto->rating, 2) ?? 0 }}</div>
                                 </td>
                                 <td>
                                     <a href="{{ url('resto/view/'.$resto->id) }}" class=

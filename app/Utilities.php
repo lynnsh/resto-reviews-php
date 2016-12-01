@@ -41,13 +41,6 @@ class Utilities {
             ->orderBy('distance')->take($number)
             ->get();
 
-        /*select * from (select *, 
-         * (select avg(rating) from reviews where reviews.resto_id = restos.id) as rating, 
-         * (select count(*) from reviews where reviews.resto_id=restos.id) as reviews, 
-         * ( 6371 * acos( cos( radians(45.5) ) *cos( radians(latitude) ) 
-         * *cos( radians(longitude) - radians(-73.55) ) +sin( radians(45.5) ) 
-         * *sin( radians(latitude) ) )) as distance from restos) 
-         * as t2 where t2.distance < 50 order by t2.distance;*/
         return $restos;
     }
     
