@@ -14,15 +14,16 @@ class ApiController extends Controller
         return response()->json($restos);
     }
     
+    //security
     public function reviews(Request $request) {
-        $reviews = Resto::find($request['resto_id']) -> reviews();
+        $reviews = Resto::find($request['resto_id']) -> reviews()->get();
         return response()->json($reviews);
     }
     
     public function create(Request $request) {
         //check credentials
         $credentials = $request->only('email', 'password');
-        $valid = Auth::once($credentials); //logs in for single request
+        $valid = \Auth::once($credentials); //logs in for single request
 
         if (!$valid)
             return response()->json(['error' => 'invalid_credentials'], 401);
@@ -41,19 +42,22 @@ class ApiController extends Controller
         }
     }
     
+    //custom error messages?
     public function add_review(Request $request) {
+        //check credentials
         $credentials = $request->only('email', 'password');
-        $valid = Auth::once($credentials); //logs in for single request
+        $valid = \Auth::once($credentials); //logs in for single request
 
         if (!$valid)
             return response()->json(['error' => 'invalid_credentials'], 401);
         else {
-            $this -> validate($request, ['title' => 'required|max:50',
+            $this -> validate($request, ['resto_id' => 'required|numeric',
+                                         'title' => 'required|max:50',
                                          'content' => 'required|max:255',
                                          'rating' => array('required','regex:/^[1-5]$/'),
                                         ]);
-            $id = $request -> resto_id;
-            Resto::find($id) -> reviews() -> create([
+            //not found
+            Resto::find($request['resto_id']) -> reviews() -> create([
                 'user_id' => $request -> user() -> id,
                 'title' => $request -> title, 
                 'content' => $request -> content,
