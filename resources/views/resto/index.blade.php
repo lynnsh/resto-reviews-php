@@ -52,10 +52,10 @@
                                     <div>{{ $resto->price }}</div>
                                 </td>
                                 <td class="table-text">
-                                    <div>{{ $add[$index]['reviews'] }}</div>
+                                    <div>{{ $resto->reviews}}</div>
                                 </td>
                                 <td class="table-text">
-                                    <div>{{ $add[$index++]['rating'] }}</div>
+                                    <div>{{ $resto->rating ?? 0 }}</div>
                                 </td>
                                 <td>
                                     <a href="{{ url('resto/view/'.$resto->id) }}" class=

@@ -19,8 +19,7 @@ class RestoController extends Controller {
             return redirect('/geo');
         $util = new Utilities();
         $restos = $util -> getRestosNear(20, $lat, session('longitude'));         
-        return view('resto.index', ['restos' => $restos, 
-            'add' => $this -> getRatingAndReviews($restos), 'index' => 0]);
+        return view('resto.index', ['restos' => $restos]);
     }
     
     
@@ -106,7 +105,7 @@ class RestoController extends Controller {
         return redirect("resto/view/$id");
     }
     
-    private function getRatingAndReviews($restos) {
+    /*private function getRatingAndReviews($restos) {
         $add = [];
         foreach($restos as $resto) {
             $rating = number_format($resto -> reviews() 
@@ -115,6 +114,6 @@ class RestoController extends Controller {
                       'rating' => $rating];
         }
         return $add;
-    }
+    }*/
 
 }
