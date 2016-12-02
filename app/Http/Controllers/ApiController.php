@@ -42,7 +42,6 @@ class ApiController extends Controller
         }
     }
     
-    //custom error messages?
     public function add_review(Request $request) {
         //check credentials
         $credentials = $request->only('email', 'password');
@@ -50,6 +49,7 @@ class ApiController extends Controller
 
         if (!$valid)
             return response()->json(['error' => 'invalid_credentials'], 401);
+        //custom error messages
         else {
             $this -> validate($request, ['resto_id' => 'required|numeric',
                                          'title' => 'required|max:50',
