@@ -12,6 +12,8 @@ class ApiController extends Controller
     public function restos(Request $request) {
         $util = new Utilities();
         $restos = $util -> getRestosNear(10, $request['latitude'], $request['longitude']);
+        //convert price to int for android
+        $this->getPriceAsInt($restos);
         return response()->json($restos);
     }
     
@@ -67,7 +69,8 @@ class ApiController extends Controller
         return Validator::make($data, [
                 'name' => 'required|max:255',
                 'genre' => 'required|max:255',
-                'price' => array('required','regex:/^\${1,4}$/'),
+                //'price' => array('required','regex:/^\${1,4}$/'),
+                'price' => array('required','regex:/^[1-4]$/'),
                 'address' => 'required_without_all:postalcode|max:255',
                 'postalcode' => 'required_without_all:address|'
                     .'regex:/^[A-Za-z][0-9][A-Za-z][ ]?[0-9][A-Za-z][0-9]$/',
@@ -81,5 +84,11 @@ class ApiController extends Controller
                 'content' => 'required|max:255',
                 'rating' => array('required','regex:/^[1-5]$/'),
                ]);
+    }
+    
+    private function getPriceAsInt($restos) {
+        foreach($restos as $resto) {
+            $resto->price = strlen($resto->price);
+        }
     }
 }

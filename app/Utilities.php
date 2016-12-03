@@ -49,9 +49,15 @@ class Utilities {
                             $request['postalcode'] : $request['address'];
         $pair = $this -> GetGeocodingSearchResults($address);
         $full_address = $request['address'].' '.$request['postalcode'];
+        
+        $price = $request -> price;
+        //convert price from android
+        if(is_numeric($price))
+            $price = $this -> getStringPrice($price);
+        
         return $request -> user() -> restos() -> create([
             'name' => $request -> name, 'genre' => $request -> genre,
-            'price' => $request -> price, 'address' => $full_address,
+            'price' => $price, 'address' => $full_address,
             'latitude' => $pair['latitude'], 'longitude' => $pair['longitude'],              
         ]);        
     }
@@ -102,5 +108,12 @@ class Utilities {
         }
         
         return $pair;
+    }
+    
+    private function getStringPrice($price) {
+        $str = '';
+        for($i = 0; $i < $price; $i++)
+            $str.='$';
+        return $str;
     }
 }
