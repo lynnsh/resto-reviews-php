@@ -81,6 +81,16 @@
                             <div>{{ $resto->created_at }}</div>
                         </td>
                     </tr>
+                    @if($resto->updated_at != $resto->created_at && isset($resto->updated_at))
+                    <tr>
+                        <td class="table-text">
+                            <div><b>Updated at:</b></div>
+                        </td>
+                        <td class="table-text">
+                            <div>{{ $resto->updated_at }}</div>
+                        </td>
+                    </tr>
+                        @endif    
                     <tr>
                         <td class="table-text">
                             <div><b>Added by:</b></div>
@@ -112,6 +122,12 @@
                 <div class="row well">
                     <div class="col-sm-2">
                         <div class="row user-review"><b>user:</b> {{ $review ->user->name }}</div>
+                        @if (Auth::check() && $review->userCanEdit(Auth::user()))
+                        <div>
+                            <a href="{{ url('/resto/edit-review/'.$review->id) }}" 
+                               class="btn btn-warning fa fa-btn fa-plus">Edit</a>
+                        </div>
+                        @endif
                     </div>
                     <div class="well review col-sm-4">
                         <div class="row"><b>{{ $review->title }}</b></div>
@@ -124,7 +140,7 @@
                     </div>  
                 </div>
                 @empty
-                    <p class="nodata">There are no reviews yet. Be the first to add the review!</p>
+                    <p class="nodata">There are no reviews yet. Be the first to add one!</p>
                 @endforelse
         
             </div>

@@ -20,4 +20,8 @@ class Review extends Model
     public function resto() {
         return $this->belongsTo('App\Resto');
     }
+    
+    public function userCanEdit(User $user) {
+        return $user->id === $this->user_id;
+    }
 }

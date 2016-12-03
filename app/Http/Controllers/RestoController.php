@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Resto;
+use App\Review;
 use App\Utilities;
 
 class RestoController extends Controller {
@@ -86,9 +87,32 @@ class RestoController extends Controller {
         return redirect('/resto/view/'.$resto->id);
     }
     
+    public function delete(Request $request, Resto $resto) {
+        $this->authorize('delete', $resto);
+        $resto->delete();
+        return redirect("/resto");
+    }
+    
+    public function edit_review(Review $review) {
+        $this->authorize('edit', $review);
+        return view('review.edit', ['review' => $review]);
+    }
+    
+    public function edit_review_resto(Request $request) {
+        $this -> validate($request, [
+            'content' => 'required|max:255',
+            'rating' => array('required','regex:/^[1-5]$/')]);
+        $review = Review::find($request -> review_id);
+        $review -> content = $request -> content;
+        $review -> rating = $request -> rating;
+        $review -> save();
+        return redirect('/resto/view/'.$review->resto_id);
+    }
+    
+    
     public function add_review(Resto $resto) {
         $this->authorize('update', $resto);
-        return view('resto.add-review', ['resto' => $resto]);
+        return view('review.add', ['resto' => $resto]);
     }
     
     public function add_review_resto(Request $request) {
@@ -105,11 +129,7 @@ class RestoController extends Controller {
         return redirect("resto/view/$id");
     }
     
-    public function delete(Request $request, Resto $resto) {
-        $this->authorize('delete', $resto);
-        $resto->delete();
-        return redirect("/resto");
-    }
+    
     
     private function getRatingAndReviews($restos) {
         $add = [];

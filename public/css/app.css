@@ -27,8 +27,9 @@
  }
  
  .user-review{
-    height: 130px;
-    line-height: 130px;
+    height: 100px;
+    line-height: 100px;
+    margin-bottom: -30px;
  }
  
  .edit-control{

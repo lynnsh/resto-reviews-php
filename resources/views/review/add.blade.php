@@ -1,4 +1,4 @@
-{{-- resources/views/resto/add-review.blade.php --}}
+{{-- resources/views/review/add.blade.php --}}
 
 @extends('layouts.app')
 
