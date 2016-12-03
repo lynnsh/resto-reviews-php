@@ -33,7 +33,7 @@ class ApiController extends Controller
         else {
             $validator = $this->restoValidator($request->all());
             if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 400);
+                return response()->json($validator->errors(), 400);
             }
             $util = new Utilities();
             $util -> addResto($request);     
@@ -50,18 +50,22 @@ class ApiController extends Controller
             return response()->json(['error' => 'invalid_credentials'], 401);
         //custom error messages
         else {
-            $validator = $this->reviewValidator($request->all());
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 400);
-            }
+            $this -> validate($request, [
+                'title' => 'required|max:50', 'content' => 'required|max:255',
+                'rating' => array('required','regex:/^[1-5]$/')]);
             //not found
-            Resto::find($request['resto_id']) -> reviews() -> create([
-                'user_id' => $request -> user() -> id,
-                'title' => $request -> title, 
-                'content' => $request -> content,
-                'rating' => $request -> rating,            
-            ]);         
-            return response()->json(['OK' => 'review is added to the database'], 200);
+            $resto = Resto::find($request['resto_id']);
+            if(isset($resto)) {
+                   $resto -> reviews() -> create([
+                    'user_id' => $request -> user() -> id,
+                    'title' => $request -> title, 
+                    'content' => $request -> content,
+                    'rating' => $request -> rating,            
+                ]);         
+                return response()->json(['OK' => 'review is added to the database'], 200);
+            }
+            else
+                return response()->json(['error' => 'the restaurant is not found'], 404);
         }
     }
     
@@ -75,15 +79,6 @@ class ApiController extends Controller
                 'postalcode' => 'required_without_all:address|'
                     .'regex:/^[A-Za-z][0-9][A-Za-z][ ]?[0-9][A-Za-z][0-9]$/',
             ]);
-    }
-    
-    private function reviewValidator($data) {
-        return Validator::make($data, [
-                'resto_id' => 'required|numeric',
-                'title' => 'required|max:50',
-                'content' => 'required|max:255',
-                'rating' => array('required','regex:/^[1-5]$/'),
-               ]);
     }
     
     private function getPriceAsInt($restos) {
