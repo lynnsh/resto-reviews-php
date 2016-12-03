@@ -43,5 +43,14 @@
      text-align: center;
  }
  
+ #search-key {
+     color: green;
+ }
+ 
+ .search {
+     margin-top: 20px;
+     margin-bottom: 20px;
+ }
+ 
  
  

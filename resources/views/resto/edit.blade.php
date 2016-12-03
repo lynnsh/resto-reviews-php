@@ -2,6 +2,8 @@
 
 @extends('layouts.app')
 
+@section('title', "{$resto->name}")
+
 @section('content')
 
     <div class="panel panel-default">

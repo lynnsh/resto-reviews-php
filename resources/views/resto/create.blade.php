@@ -2,6 +2,8 @@
 
 @extends('layouts.app')
 
+@section('title', 'Add new restaurant')
+
 @section('content')
 
     <div class="panel panel-default">

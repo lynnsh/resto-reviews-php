@@ -1,6 +1,9 @@
 {{-- resources/views/resto/index.blade.php --}}
 
 @extends('layouts.app')
+
+@section('title', 'Nearby Restaurants')
+
 @section('content')
     <div class='resto-search'>
         <form action="{{ url('resto/search') }}" method="GET">

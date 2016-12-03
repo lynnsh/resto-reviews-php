@@ -2,6 +2,8 @@
 
 @extends('layouts.app')
 
+@section('title', 'Add a review')
+
 @section('content')
 
     <div class="panel panel-default">

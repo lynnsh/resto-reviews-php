@@ -8,7 +8,7 @@
     {{-- CSRF Token --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Restaurant Reviews') }}</title>
+    <title>@yield('title')</title>
 
     {{-- Styles --}}   
     <link rel="stylesheet" href=
@@ -38,7 +38,7 @@
 
                     {{-- Branding Image --}}
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Restaurant Reviews') }}
+                        {{ config('app.name', 'RadiantRidge - Restaurant Reviews') }}
                     </a>
                 </div>
 

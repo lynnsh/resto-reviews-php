@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Restaurant Reviews',
+    'name' => 'RadiantRidge - Restaurant Reviews',
 
     /*
     |--------------------------------------------------------------------------
@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Toronto',
 
     /*
     |--------------------------------------------------------------------------

@@ -2,6 +2,8 @@
 
 @extends('layouts.app')
 
+@section('title', "{$resto->name}")
+
 @section('content')
     @if (Auth::check())
         {{-- edit a resto --}}

@@ -1,14 +1,17 @@
 {{-- resources/views/resto/search.blade.php --}}
 
 @extends('layouts.app')
-@section('content')
 
-    @if (count($restos) > 0)
+@section('title', "Search results: $key")
+
+@section('content')
+  
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4>Search Results:</h4>
+                <h4>Search Results for <span id='search-key'>{{$key}}</span>:</h4>
             </div>
-
+            
+            @if (count($restos) > 0)
             <div class="panel-body">
                 <table class="table table-striped resto-table">
 
@@ -49,13 +52,13 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
-        </div>   
-    {{ $restos->appends(Request::only('key'))->links() }}   
-    @else
-        <p class="nodata">No results available.</p>
-    @endif
-    
+            </div>           
+            {{ $restos->appends(Request::only('key'))->links() }}   
+            
+            @else
+                <p class="nodata search">No results available.</p>
+            @endif
+        </div>
     
     
     <div class="btn-option">

@@ -1,4 +1,9 @@
+{{-- resources/views/geo/index.blade.php --}}
+
 @extends('layouts.app')
+
+@section('title', 'Geolocation')
+
 @section('js')
     <script src="/js/geo.js"></script>
 @endsection
