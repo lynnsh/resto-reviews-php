@@ -107,7 +107,7 @@
     @if (Auth::check())
         {{-- add a review --}}
         <div class="btn-option">
-            <a href="{{ url('/resto/add-review/'.$resto->id) }}" class="btn btn-info fa fa-btn fa-plus">
+            <a href="{{ url('/review/add/'.$resto->id) }}" class="btn btn-info fa fa-btn fa-plus">
                 Post new review..</a>
         </div>
     @endif
@@ -124,7 +124,7 @@
                         <div class="row user-review"><b>user:</b> {{ $review ->user->name }}</div>
                         @if (Auth::check() && $review->userCanEdit(Auth::user()))
                         <div>
-                            <a href="{{ url('/resto/edit-review/'.$review->id) }}" 
+                            <a href="{{ url('/review/edit/'.$review->id) }}" 
                                class="btn btn-warning fa fa-btn fa-plus">Edit</a>
                         </div>
                         @endif

@@ -13,7 +13,7 @@
 
         <div class="panel-body">
             @include('common.errors')
-            <form action="{{ url('resto/add-review') }}" method="POST">
+            <form action="{{ url('review/add') }}" method="POST">
             {{method_field('put')}}
             {{ csrf_field() }}           
             <input name="resto_id" type="hidden" value="{{ $resto -> id }}"/>

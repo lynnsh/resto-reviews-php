@@ -32,10 +32,10 @@ Route::post('/resto/edit', 'RestoController@edit_resto');
 
 Route::delete('/resto/{resto}', 'RestoController@delete');
 
-Route::get('/resto/add-review/{resto}', 'RestoController@add_review');
-Route::put('/resto/add-review/', 'RestoController@add_review_resto');
+Route::get('/review/add/{resto}', 'ReviewController@add');
+Route::put('/review/add/', 'ReviewController@add_review');
 
-Route::get('/resto/edit-review/{review}', 'RestoController@edit_review');
-Route::post('/resto/edit-review/', 'RestoController@edit_review_resto');
+Route::get('/review/edit/{review}', 'ReviewController@edit');
+Route::post('/review/edit/', 'ReviewController@edit_review');
 
 

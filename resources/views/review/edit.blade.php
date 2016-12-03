@@ -2,7 +2,7 @@
 
 @extends('layouts.app')
 
-@section('title', 'Edit: '.$review->title)
+@section('title', 'Edit a review: '.$review->title)
 
 @section('content')
 
@@ -13,7 +13,7 @@
 
         <div class="panel-body">
             @include('common.errors')
-            <form action="{{ url('resto/edit-review') }}" method="POST">
+            <form action="{{ url('/review/edit') }}" method="POST">
             {{ csrf_field() }}           
             <input name="review_id" type="hidden" value="{{ $review -> id }}"/>
             <table class="table table-striped resto-table">
