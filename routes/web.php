@@ -32,3 +32,5 @@ Route::post('/resto/edit', 'RestoController@edit_resto');
 
 Route::get('/resto/add-review/{resto}', 'RestoController@add_review');
 Route::put('/resto/add-review/', 'RestoController@add_review_resto');
+
+Route::delete('/resto/{resto}', 'RestoController@delete');

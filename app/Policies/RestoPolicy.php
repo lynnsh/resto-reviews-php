@@ -13,12 +13,22 @@ class RestoPolicy
     /**
      * Determine whether the user can update the resto.
      *
-     * @param  \App\User  $user
-     * @param  \App\Resto  $resto
-     * @return mixed
+     * @param  User  $user
+     * @param  Resto  $resto
+     * @return boolean
      */
-    public function update(User $user, Resto $resto)
-    {
+    public function update(User $user, Resto $resto) {
         return isset($user);
+    }
+    
+    /**
+     * Determine if the given user can delete the given resto.
+     *
+     * @param  User  $user
+     * @param  Resto  $resto
+     * @return boolean
+     */
+    public function delete(User $user, Resto $resto) {
+        return $user->id === $resto->user_id;
     }
 }

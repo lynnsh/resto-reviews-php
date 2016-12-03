@@ -21,4 +21,8 @@ class Resto extends Model
     public function reviews() {
         return $this->hasMany('App\Review');
     }
+    
+    public function userCanDelete(User $user) {
+        return $user->id === $this->user_id;
+    }
 }

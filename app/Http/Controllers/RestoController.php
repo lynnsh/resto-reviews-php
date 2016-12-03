@@ -105,6 +105,12 @@ class RestoController extends Controller {
         return redirect("resto/view/$id");
     }
     
+    public function delete(Request $request, Resto $resto) {
+        $this->authorize('delete', $resto);
+        $resto->delete();
+        return redirect("/resto");
+    }
+    
     private function getRatingAndReviews($restos) {
         $add = [];
         foreach($restos as $resto) {

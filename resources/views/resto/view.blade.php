@@ -10,6 +10,17 @@
                 Edit this restaurant..</a>
         </div>
     @endif
+    @if (Auth::check() && $resto->userCanDelete(Auth::user()))
+        {{-- delete a resto --}}
+        <form action="{{ url('resto/'.$resto->id) }}" method="POST">
+            {{ csrf_field() }}
+            {{ method_field('DELETE') }}
+
+            <button type="submit" id="delete-resto-{{ $resto->id }}" class="btn btn-danger btn-option">
+                <i class="fa fa-btn fa-trash"></i>Delete this restaurant..
+            </button>
+        </form>
+    @endif
     
     <div class="panel panel-default">
         <div class="panel-heading">
