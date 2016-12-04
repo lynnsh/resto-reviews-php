@@ -60,3 +60,15 @@
     margin-left: 60px;
     position:absolute;
 }
+
+.center-text{
+    text-align: center;
+}
+
+#popup {
+    min-width:350px;
+    min-height:120px;
+    white-space: nowrap;
+    line-height: 1.35;
+    overflow: hidden;
+}

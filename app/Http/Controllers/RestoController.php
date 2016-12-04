@@ -28,7 +28,8 @@ class RestoController extends Controller {
             return redirect('/geo');
         $util = new Utilities();
         $restos = $util -> getRestosNear(20, $lat, session('longitude'));         
-        return view('resto.index', ['restos' => $restos, 'json' => json_encode($restos)]);
+        return view('resto.index', ['restos' => $restos, 
+                                    'json' => json_encode($restos)]);
     }
     
     /**
