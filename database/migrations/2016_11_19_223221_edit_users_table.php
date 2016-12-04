@@ -8,7 +8,7 @@ class EditUsersTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     * Add latitude and longitude to users table.
      * @return void
      */
     public function up()

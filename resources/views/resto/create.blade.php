@@ -17,7 +17,7 @@
             {{method_field('put')}}
             {{ csrf_field() }}
             <table class="table table-striped resto-table">
-            <!-- Table Body -->
+            {{-- Table Body --}}
             <tbody>
                 <tr>
                     <td class="table-text">

@@ -8,7 +8,7 @@ class EditReviewsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     * Add on delete cascade for reviews with resto_id foreign key.
      * @return void
      */
     public function up()
