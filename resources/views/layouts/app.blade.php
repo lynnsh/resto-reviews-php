@@ -14,7 +14,8 @@
     <link rel="stylesheet" href=
        "http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link href="/css/app.css" rel="stylesheet">
-
+    <link rel="shortcut icon" href="{{ asset('resto_icon.ico') }}">
+    
     {{-- Scripts --}}
     <script>
         window.Laravel = <?php echo json_encode([
