@@ -19,6 +19,7 @@ class RestoController extends Controller {
      * Returns a view that displays the restos that are close to the user.
      * If user's location is undefined, the user is redirected 
      * to the geolocation page.
+     * Sends a json with the restos list for the view to display it on the map.
      * @return a view that displays the restos that are close to the user.
      */
     public function index() {  
@@ -27,7 +28,7 @@ class RestoController extends Controller {
             return redirect('/geo');
         $util = new Utilities();
         $restos = $util -> getRestosNear(20, $lat, session('longitude'));         
-        return view('resto.index', ['restos' => $restos]);
+        return view('resto.index', ['restos' => $restos, 'json' => json_encode($restos)]);
     }
     
     /**

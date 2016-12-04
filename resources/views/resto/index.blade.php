@@ -4,7 +4,16 @@
 
 @section('title', 'Nearby Restaurants')
 
+@section('js')
+    <script src="/js/map.js" onload="init({{$json}})"></script>
+    <script  
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlBuFhyDaUcAMffdbFHDlwAI4dhV9uXWw&callback=initMap"
+      async defer></script>
+
+@endsection
+
 @section('content')
+    
     <div class='resto-search'>
         <form action="{{ url('resto/search') }}" method="GET">
             <div class="form-group row">
@@ -21,7 +30,7 @@
             </div>
         </form>
     </div>
-            
+
     @if (count($restos) > 0)
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -69,16 +78,22 @@
                     </tbody>
                 </table>
             </div>
+            
         </div>
     @else
         <p class="nodata">There are no restaurants added near you.</p>
     @endif
+    
     
     @if ( Auth::check()  )
         {{-- add a resto --}}
         <div class="btn-option">
             <a href='/resto/create' class="btn btn-warning fa fa-btn fa-plus">Add new restaurant..</a>
         </div>
+    @endif
+    
+    @if (count($restos) > 0)
+    <div id="map"></div>
     @endif
     
 @endsection

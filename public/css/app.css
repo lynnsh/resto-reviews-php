@@ -53,5 +53,10 @@
      margin-bottom: 20px;
  }
  
- 
- 
+#map {
+    height: 50%;
+    width: 90%;
+    margin-top: 10px;
+    margin-left: 60px;
+    position:absolute;
+}
