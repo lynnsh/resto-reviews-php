@@ -19,28 +19,39 @@ class ApiController extends Controller {
      * Responds to a GET request and returns JSON containing the restaurants 
      * that are close to the provided location (latitude and longitude).
      * @param Request $request the Request object with latitude and longitude.
-     * @return JSON containing the restaurants that are close to 
-     *         the provided location
+     * @return JSON containing the restaurants that are close to the provided location,
+     *         or code 400 if latitude or longitude were invalid.
      */
     public function restos(Request $request) {
         $util = new Utilities();
-        $restos = $util -> getRestosNear(10, $request['latitude'], 
-                                             $request['longitude']);
-        //convert price to an integer for android
-        $this->getPriceAsInt($restos);
-        return response()->json($restos);
+        $lat = $request['latitude'];
+        $long = $request['longitude'];
+        if(is_float($lat) && is_float($long)) {
+            $restos = $util -> getRestosNear(10, $lat, $long);
+            //convert price to an integer for android
+            $this->getPriceAsInt($restos);
+            return response()->json($restos);
+        }
+        else
+            return response()->json(['error' => 'invalid latitude or longitude'], 400);
     }
     
     /**
      * Responds to a GET request and returns JSON containing the reviews 
      * corresponding to the provided restaurant.
      * @param Request $request the Request object with the restaurant id.
-     * @return JSON containing the reviews corresponding to 
-     *         the provided restaurant.
+     * @return JSON containing the reviews corresponding to the provided restaurant 
+     *         or code 404 if the restaurant provided is not in the database.
      */
     public function reviews(Request $request) {
-        $reviews = Resto::find($request['resto_id']) -> reviews() -> get();
-        return response()->json($reviews);
+        $resto = Resto::find($request['resto_id']);
+        if(isset($resto)) {
+            $reviews = $resto -> reviews() -> get();
+            return response()->json($reviews);
+        }
+        //the restaurant is not in the database
+        else
+            return response()->json(['error' => 'the resto is not found'], 404);
     }
     
     /**
@@ -81,7 +92,7 @@ class ApiController extends Controller {
      * @return code 200 if the review was added successfully;
      *         code 401 if the user had invalid credentials;
      *         code 400 if some review fields were invalid;
-     *         code 405 if the restaurant provided is not in the database.
+     *         code 404 if the restaurant provided is not in the database.
      */
     public function add_review(Request $request) {
         //check credentials
