@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
-class HomeController extends Controller
-{
+/**
+ * The Controller class that redirects the user to the appropriate page.
+ * 
+ * @author Alena Shulzhenko
+ * @version 2016-01-03
+ */
+class HomeController extends Controller {
 
     /**
-     * Routes to the appropriate address.
-     *
-     * @return \Illuminate\Http\Response
+     * Routes to the appropriate address. If user's location is set, the user
+     * is redirected to the resto page; otherwise to geolocation page.
      */
     public function index() {
         $lat = session('latitude');

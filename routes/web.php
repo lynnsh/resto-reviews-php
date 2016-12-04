@@ -13,12 +13,13 @@
 
 Auth::routes();
 
+Route::get('/', 'RestoController@index');
+
 Route::get('/home', 'HomeController@index');
 
 Route::post('/geo', 'GeoController@locate');
 Route::get('/geo', 'GeoController@index');
 
-Route::get('/', 'RestoController@index');
 Route::get('/resto', 'RestoController@index');
 Route::get('/resto/view/{resto}', 'RestoController@view');
 

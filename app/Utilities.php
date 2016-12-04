@@ -46,7 +46,7 @@ class Utilities {
     
     public function addResto($request) {
         $address = !empty($request['postalcode']) ? 
-                            $request['postalcode'] : $request['address'];
+                          $request['postalcode'] : $request['address'];
         $pair = $this -> GetGeocodingSearchResults($address);
         $full_address = $request['address'].' '.$request['postalcode'];
         

@@ -38,6 +38,12 @@ class LoginController extends Controller
         $this->middleware('guest', ['except' => 'logout']);
     }
     
+    /**
+     * The overridden method to set user's latitude and longitude 
+     * when the user is authenticated.
+     * @param Request $request the Request objects.
+     * @param User $user the authenticated user with latitude and longitude set.
+     */
     protected function authenticated(Request $request, $user)
     {       
         session(['latitude'=> $user->latitude, 'longitude' => $user->longitude]);

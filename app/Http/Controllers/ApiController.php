@@ -7,22 +7,53 @@ use Validator;
 use App\Resto;
 use App\Utilities;
 
-class ApiController extends Controller
-{   
+/**
+ * The Controller class that handles api requests from the android application.
+ * 
+ * @author Alena Shulzhenko
+ * @version 2016-01-03
+ */
+class ApiController extends Controller {   
+    
+    /**
+     * Responds to a GET request and returns JSON containing the restaurants 
+     * that are close to the provided location (latitude and longitude).
+     * @param Request $request the Request object with latitude and longitude.
+     * @return JSON containing the restaurants that are close to 
+     *         the provided location
+     */
     public function restos(Request $request) {
         $util = new Utilities();
-        $restos = $util -> getRestosNear(10, $request['latitude'], $request['longitude']);
-        //convert price to int for android
+        $restos = $util -> getRestosNear(10, $request['latitude'], 
+                                             $request['longitude']);
+        //convert price to an integer for android
         $this->getPriceAsInt($restos);
         return response()->json($restos);
     }
     
-    //security
+    /**
+     * Responds to a GET request and returns JSON containing the reviews 
+     * corresponding to the provided restaurant.
+     * @param Request $request the Request object with the restaurant id.
+     * @return JSON containing the reviews corresponding to 
+     *         the provided restaurant.
+     */
     public function reviews(Request $request) {
-        $reviews = Resto::find($request['resto_id']) -> reviews()->get();
+        $reviews = Resto::find($request['resto_id']) -> reviews() -> get();
         return response()->json($reviews);
     }
     
+    /**
+     * Responds to a POST request and creates a new restaurant with the
+     * provided information.
+     * Validator object is created to support requests without
+     * header requesting JSON object in return.
+     * @param Request $request the Request object with the information 
+     *                         to create a new restaurant.
+     * @return code 200 if the  restaurant was added successfully;
+     *         code 401 if the user had invalid credentials;
+     *         code 400 if some restaurant fields were invalid.
+     */
     public function create(Request $request) {
         //check credentials
         $credentials = $request->only('email', 'password');
@@ -31,44 +62,70 @@ class ApiController extends Controller
         if (!$valid)
             return response()->json(['error' => 'invalid_credentials'], 401);
         else {
+            //to validate resto fields
             $validator = $this->restoValidator($request->all());
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 400);
             }
             $util = new Utilities();
             $util -> addResto($request);     
-            return response()->json(['OK' => 'resto is added to the database'], 200);
+            return response()->json(['OK' => 'the resto is added to the database'], 200);
         }
     }
     
+    /**
+     * Responds to a POST request and adds a new review for the provided
+     * restaurant.
+     * @param Request $request the Request object with the information 
+     *                         to add a new review.
+     * @return code 200 if the review was added successfully;
+     *         code 401 if the user had invalid credentials;
+     *         code 400 if some review fields were invalid;
+     *         code 405 if the restaurant provided is not in the database.
+     */
     public function add_review(Request $request) {
         //check credentials
         $credentials = $request->only('email', 'password');
         $valid = \Auth::once($credentials); //logs in for single request
-
         if (!$valid)
             return response()->json(['error' => 'invalid_credentials'], 401);
-        //custom error messages
         else {
+            //validation
             $this -> validate($request, [
                 'title' => 'required|max:50', 'content' => 'required|max:255',
                 'rating' => array('required','regex:/^[1-5]$/')]);
-            //not found
             $resto = Resto::find($request['resto_id']);
             if(isset($resto)) {
-                   $resto -> reviews() -> create([
+                return $this -> createReview($resto, $request);                  
+            }
+            //the restaurant is not in the database
+            else
+                return response()->json(['error' => 'the resto is not found'], 404);
+        }
+    }
+    
+    /**
+     * Creates new review in the database.
+     * @param Resto $resto the Resto to which this review corresponds to.
+     * @param Request $request the Request object with necessary information
+     *                         to create a review.
+     * @return JSON with code 200, signalling that the review was added successfully.
+     */
+    private function createReview(Resto $resto, Request $request) {
+        $resto -> reviews() -> create([
                     'user_id' => $request -> user() -> id,
                     'title' => $request -> title, 
                     'content' => $request -> content,
                     'rating' => $request -> rating,            
-                ]);         
-                return response()->json(['OK' => 'review is added to the database'], 200);
-            }
-            else
-                return response()->json(['error' => 'the restaurant is not found'], 404);
-        }
+        ]);         
+        return response()->json(['OK' => 'the review is added to the database'], 200);
     }
     
+    /**
+     * The Validator that verifies Resto fields submitted through a POST request.
+     * @param $data the data submitted through a POST request to verify.
+     * @return the result of the validation.
+     */
     private function restoValidator($data) {
         return Validator::make($data, [
                 'name' => 'required|max:255',
@@ -81,6 +138,10 @@ class ApiController extends Controller
             ]);
     }
     
+    /**
+     * Converts price from $ to an integer for Android.
+     * @param $restos the array of Resto objects.
+     */
     private function getPriceAsInt($restos) {
         foreach($restos as $resto) {
             $resto->price = strlen($resto->price);
