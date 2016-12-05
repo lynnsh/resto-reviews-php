@@ -26,7 +26,7 @@ class ApiController extends Controller {
         $util = new Utilities();
         $lat = $request['latitude'];
         $long = $request['longitude'];
-        if(is_float($lat) && is_float($long)) {
+        if(is_numeric($lat) && is_numeric($long)) {
             $restos = $util -> getRestosNear(10, $lat, $long);
             //convert price to an integer for android
             $this->getPriceAsInt($restos);
@@ -40,11 +40,15 @@ class ApiController extends Controller {
      * Responds to a GET request and returns JSON containing the reviews 
      * corresponding to the provided restaurant.
      * @param Request $request the Request object with the restaurant id.
-     * @return JSON containing the reviews corresponding to the provided restaurant 
-     *         or code 404 if the restaurant provided is not in the database.
+     * @return JSON containing the reviews corresponding to the provided restaurant, 
+     *         code 404 if the restaurant provided is not in the database,
+     *         or code 400 if the resto id has an invalid format.
      */
     public function reviews(Request $request) {
-        $resto = Resto::find($request['resto_id']);
+        $id = $request['resto_id'];
+        if(!is_numeric($id))
+            return response()->json(['error' => 'invalid id for resto'], 400);
+        $resto = Resto::find($id);
         if(isset($resto)) {
             $reviews = $resto -> reviews() -> get();
             return response()->json($reviews);
@@ -104,7 +108,7 @@ class ApiController extends Controller {
             //validation
             $this -> validate($request, [
                 'title' => 'required|max:50', 'content' => 'required|max:255',
-                'rating' => array('required','regex:/^[1-5]$/')]);
+                'rating' => array('required','regex:/^([1-4]\.[0-9]+)|5\.0$/')]);
             $resto = Resto::find($request['resto_id']);
             if(isset($resto)) {
                 return $this -> createReview($resto, $request);                  
@@ -123,11 +127,13 @@ class ApiController extends Controller {
      * @return JSON with code 200, signalling that the review was added successfully.
      */
     private function createReview(Resto $resto, Request $request) {
+        //converting float rating from android
+        $rating = intval(round($request -> rating));
         $resto -> reviews() -> create([
                     'user_id' => $request -> user() -> id,
                     'title' => $request -> title, 
                     'content' => $request -> content,
-                    'rating' => $request -> rating,            
+                    'rating' => $rating,            
         ]);         
         return response()->json(['OK' => 'the review is added to the database'], 200);
     }
