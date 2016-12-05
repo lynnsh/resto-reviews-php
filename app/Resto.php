@@ -4,6 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * The class that represents a Resto object.
+ * 
+ * @author Alena Shulzhenko
+ * @version 2016-12-05
+ */
 class Resto extends Model
 {
     /**

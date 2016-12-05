@@ -11,7 +11,7 @@ use App\Utilities;
  * The Controller class that handles api requests from the android application.
  * 
  * @author Alena Shulzhenko
- * @version 2016-01-03
+ * @version 2016-12-05
  */
 class ApiController extends Controller {   
     
@@ -147,7 +147,6 @@ class ApiController extends Controller {
         return Validator::make($data, [
                 'name' => 'required|max:255',
                 'genre' => 'required|max:255',
-                //'price' => array('required','regex:/^\${1,4}$/'),
                 'price' => array('required','regex:/^[1-4]$/'),
                 'address' => 'required_without_all:postalcode|max:255',
                 'postalcode' => 'required_without_all:address|'

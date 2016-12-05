@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
  * The Utility helper class for managing Restos and locations.
  *
  * @author Alena Shulzhenko
- * @version 2016-01-03
+ * @version 2016-12-05
  */
 class Utilities {
     //Montreal location is the default

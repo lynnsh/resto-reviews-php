@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
  * such as adding and editing a review.
  * 
  * @author Alena Shulzhenko
- * @version 2016-01-03
+ * @version 2016-12-05
  */
 class ReviewController extends Controller {
     

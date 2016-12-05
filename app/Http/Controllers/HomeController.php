@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
  * The Controller class that redirects the user to the appropriate page.
  * 
  * @author Alena Shulzhenko
- * @version 2016-01-03
+ * @version 2016-12-05
  */
 class HomeController extends Controller {
 

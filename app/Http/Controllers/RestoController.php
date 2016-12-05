@@ -11,7 +11,7 @@ use App\Utilities;
  * such as adding, editing, deleting, viewing, and searching for a resto.
  * 
  * @author Alena Shulzhenko
- * @version 2016-01-03
+ * @version 2016-12-05
  */
 class RestoController extends Controller {
       

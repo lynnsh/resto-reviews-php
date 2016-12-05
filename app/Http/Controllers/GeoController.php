@@ -9,7 +9,7 @@ use App\Utilities;
  * The Controller class that handles geolocation of the user.
  * 
  * @author Alena Shulzhenko
- * @version 2016-01-03
+ * @version 2016-12-05
  */
 class GeoController extends Controller {
     
