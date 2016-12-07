@@ -83,8 +83,8 @@ class ApiController extends Controller {
                 return response()->json($validator->errors(), 400);
             }
             $util = new Utilities();
-            $util -> addResto($request);     
-            return response()->json(['OK' => 'the resto is added to the database'], 200);
+            $resto = $util -> addResto($request);     
+            return response()->json(['id' => $resto->id], 200);
         }
     }
     
@@ -129,13 +129,13 @@ class ApiController extends Controller {
     private function createReview(Resto $resto, Request $request) {
         //converting float rating from android
         $rating = intval(round($request -> rating));
-        $resto -> reviews() -> create([
+        $review = $resto -> reviews() -> create([
                     'user_id' => $request -> user() -> id,
                     'title' => $request -> title, 
                     'content' => $request -> content,
                     'rating' => $rating,            
         ]);         
-        return response()->json(['OK' => 'the review is added to the database'], 200);
+        return response()->json(['id' => $review->id], 200);
     }
     
     /**
