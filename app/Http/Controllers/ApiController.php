@@ -11,7 +11,7 @@ use App\Utilities;
  * The Controller class that handles api requests from the android application.
  * 
  * @author Alena Shulzhenko
- * @version 2016-12-05
+ * @version 2016-12-07
  */
 class ApiController extends Controller {   
     
@@ -134,7 +134,7 @@ class ApiController extends Controller {
                     'title' => $request -> title, 
                     'content' => $request -> content,
                     'rating' => $rating,            
-        ]);         
+        ]);     
         return response()->json(['id' => $review->id], 200);
     }
     
