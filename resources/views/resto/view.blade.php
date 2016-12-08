@@ -18,7 +18,7 @@
             {{ csrf_field() }}
             {{ method_field('DELETE') }}
 
-            <button type="submit" id="delete-resto-{{ $resto->id }}" class="btn btn-danger btn-option">
+            <button type="submit" id="delete-resto-{{ $resto->id }}" class="btn btn-danger btn-option form-delete">
                 <i class="fa fa-btn fa-trash"></i>Delete this restaurant..
             </button>
         </form>

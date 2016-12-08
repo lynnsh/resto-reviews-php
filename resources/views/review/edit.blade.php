@@ -16,12 +16,12 @@
             <form action="{{ url('/review/edit') }}" method="POST">
             {{ csrf_field() }}           
             <input name="review_id" type="hidden" value="{{ $review -> id }}"/>
-            <table class="table table-striped resto-table">
+            <table class="table resto-table">
             {{-- Table Body --}}
                 <tbody>
                     <tr>
                         <td class="table-text">
-                            <div>Content:</div>
+                            <div><i>Content:</i></div>
                         </td>
                         <td class="table-text">
                             <input id='content' type='text' name='content' class="form-control edit-control" 
@@ -30,7 +30,7 @@
                     </tr>
                     <tr>
                          <td class="table-text">
-                            <div>Rating:</div>
+                            <div><i>Rating:</i></div>
                         </td>
                         <td class="table-text">
                             <input id='rating' type='text' name='rating' class="form-control edit-control" 

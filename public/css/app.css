@@ -121,4 +121,9 @@
     border-radius: 25px;
     opacity: 0.9;
  }
+ 
+ .form-delete {
+ 	padding: 6px;
+ 	margin-bottom: 20px;
+ }
 

@@ -16,12 +16,12 @@
             <form action="{{ url('resto/edit') }}" method="POST">
             {{ csrf_field() }}
             <input name="id" type="hidden" value="{{ $resto -> id }}">
-            <table class="table table-striped resto-table">
+            <table class="table resto-table">
             {{-- Table Body --}}
             <tbody>
                 <tr>
                     <td class="table-text">
-                        <div><b>Name:</b></div>
+                        <div><i>Name:</i></div>
                     </td>
                     <td class="table-text">
                         <input id='name' type='text' name='name' class="form-control edit-control" 
@@ -30,7 +30,7 @@
                 </tr>
                 <tr>
                     <td class="table-text">
-                        <div><b>Genre:</b></div>
+                        <div><i>Genre:</i></div>
                     </td>
                     <td class="table-text">
                         <input id='genre' type='text' name='genre' class="form-control edit-control" 
@@ -39,7 +39,7 @@
                 </tr>
                 <tr>
                      <td class="table-text">
-                        <div><b>Price:</b></div>
+                        <div><i>Price:</i></div>
                     </td>
                     <td class="table-text">
                         <input id='price' type='text' name='price' class="form-control edit-control" 
@@ -48,7 +48,7 @@
                 </tr>
                 <tr>
                     <td class="table-text">
-                        <div><b>Address:</b></div>
+                        <div><i>Address:</i></div>
                     </td>
                     <td class="table-text">
                         <input id='address' type='text' name='address' class="form-control edit-control" 
@@ -66,7 +66,7 @@
         </div>
     </div>
     
-    <div>
+    <div class="btn-option">
         <a href='/resto' class="btn btn-default fa fa-btn fa-plus">Home</a>
     </div>
     
