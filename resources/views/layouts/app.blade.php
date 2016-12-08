@@ -14,7 +14,11 @@
     <link rel="stylesheet" href=
        "http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link href="/css/app.css" rel="stylesheet">
+    
     <link rel="shortcut icon" href="{{ asset('resto_icon.ico') }}">
+    
+    {{-- for css specific to each page --}}
+    @yield('css')
     
     {{-- Scripts --}}
     <script>

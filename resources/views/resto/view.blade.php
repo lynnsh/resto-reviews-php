@@ -117,9 +117,9 @@
                 <h4>Reviews:</h4>
             </div>
 
-            <div class="panel-body">
+            <div class="panel-body panel-review">
                 @forelse ($reviews as $review)
-                <div class="row well">
+                <div class="row well well-container">
                     <div class="col-sm-2">
                         <div class="row user-review"><b>user:</b> {{ $review ->user->name }}</div>
                         @if (Auth::check() && $review->userCanEdit(Auth::user()))
@@ -129,7 +129,7 @@
                         </div>
                         @endif
                     </div>
-                    <div class="well review col-sm-4">
+                    <div class="well well-review col-sm-4">
                         <div class="row"><b>{{ $review->title }}</b></div>
                         <div class="row">{{ $review->content }}</div>
                         <div class="row"><b>rating:</b> {{ $review->rating }}</div>
@@ -145,9 +145,10 @@
         
             </div>
         </div>
-
-    {{ $reviews->links() }}
     
+    <div class='links'>
+    {{ $reviews->links() }}
+    </div>
     <div class="btn-option">
         <a href='/resto' class="btn btn-default fa fa-btn fa-plus">Home</a>
     </div>

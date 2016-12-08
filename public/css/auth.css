@@ -1,0 +1,22 @@
+ html, body {
+	height: 100%;
+    background-image: url("../images/auth.jpg");
+    background-size: cover;                      
+    background-repeat: no-repeat;
+    background-position: center center;   
+}
+
+.panel-body {
+    padding-left: 40px;
+    padding-right: 40px;
+    background-image: url("../images/auth-repeat.jpg");
+    opacity: 0.8;
+}
+
+.panel, .panel-heading {
+    opacity: 0.9;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 25px;
+}

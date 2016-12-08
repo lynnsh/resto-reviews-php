@@ -19,12 +19,12 @@
          <input type="hidden" name="error"/>                
          <div class="form-group centered">
             {{-- Postal code --}}
-            <label for="postal" class="col-sm-4 control-label">Postal Code:</label>
-            <div class="col-sm-2">
+            <label for="postal" class="col-sm-4 control-label lbl-postal">Postal Code:</label>
+            <div class="col-sm-3">
                <input type="text" name="postal" id="postal" class="form-control" value="{{ old('postal') }}">
             </div>          
             {{-- submit Button --}}
-            <div class="col-sm-6">
+            <div class="col-sm-5">
                 <button type="submit" class="btn btn-success">
                    <i class="fa fa-btn fa-plus"></i>Submit
                 </button>
