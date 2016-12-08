@@ -15,7 +15,7 @@
        "http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link href="/css/app.css" rel="stylesheet">
     
-    <link rel="shortcut icon" href="{{ asset('resto_icon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('owl-icon.ico') }}">
     
     {{-- for css specific to each page --}}
     @yield('css')
