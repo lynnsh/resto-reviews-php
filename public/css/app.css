@@ -25,20 +25,18 @@
      text-align: right;
      font-size: 1.3em;
      padding-top:5px;
-     color: white;
+     color: #1a1a1a;
  }
 
 
  .btn-option {
-    margin-left:20px;
+    margin-left:60px;
     padding-bottom:20px;
  }
  
 .links {
     margin-left:20px;
  }
- 
-
  
  .user-review{
     height: 100px;
@@ -59,7 +57,10 @@
  }
  
  #search-key {
-     color: green;
+     color: #879900;
+     font-weight: bold;
+     font-style: italic;
+     padding-right: 5px;
  }
  
  .search {
@@ -125,5 +126,9 @@
  .form-delete {
  	padding: 6px;
  	margin-bottom: 20px;
+ }
+ 
+ .btn {
+     color: #1a1a1a;
  }
 

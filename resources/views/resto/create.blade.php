@@ -16,7 +16,7 @@
             <form action="{{ url('resto/create') }}" method="POST">
             {{method_field('put')}}
             {{ csrf_field() }}
-            <table class="table table-striped resto-table">
+            <table class="table resto-table">
             {{-- Table Body --}}
             <tbody>
                 <tr>
