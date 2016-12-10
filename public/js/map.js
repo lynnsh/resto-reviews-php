@@ -1,5 +1,9 @@
-/* global google, map */
+/*
+ * The methods responsible for displaying Google Maps with 
+ * nearest restos on the index page.
+ */
 
+//global scope for the variable
 var g = {};
 
 /**
